@@ -1,0 +1,26 @@
+{
+    "en": {
+        "welcome": "Welcome to My Portfolio",
+        "about": "About Me",
+        "aboutText": "Information about you and your background in data analysis.",
+        "projects": "My Projects",
+        "contact": "Contact",
+        "name": "Name:",
+        "yourName": "Your Name",
+        "email": "Email:",
+        "yourEmail": "Your Email",
+        "send": "Send"
+    },
+    "fr": {
+        "welcome": "Bienvenue sur Mon Portfolio",
+        "about": "À Propos de Moi",
+        "aboutText": "Informations sur vous et votre parcours en analyse de données.",
+        "projects": "Mes Projets",
+        "contact": "Contact",
+        "name": "Nom:",
+        "yourName": "Votre Nom",
+        "email": "Email:",
+        "yourEmail": "Votre Email",
+        "send": "Envoyer"
+    }
+}

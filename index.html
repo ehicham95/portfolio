@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HE Data Analyst Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="personal-info">
+                <h1>Hicham EL HADRACHI</h1>
+                <h2>Business Data Analyst</h2>
+            </div>
+            <nav>
+                <ul>
+                <li><a href="#about">About me</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="language-switcher">
+                <div class="flag-container">
+                    <img src="https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png" alt="English" class="flag-icon" id="selectedFlag" >
+                    <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" alt="Français" class="flag-icon alternative-flag" onclick="switchLanguage()">
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section id="about">
+            <h2>About Me</h2>
+            <p id="aboutText">Information about you and your background in data analysis.</p>
+        </section>
+        <section id="projects">
+            <h2>My Projects</h2>
+            <div class="projects-container" id="projectsContainer">
+                <!-- Project cards will be inserted here by JavaScript -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div id="contact" class="social-buttons">
+            <a href="https://linkedin.com/in/yourprofile" class="social-button linkedin" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/yourprofile" class="social-button github" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://twitter.com/yourprofile" class="social-button twitter" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="mailto:hicham.elhadrachi@gmail.com" class="social-button gmail" aria-label="Gmail">
+                <i class="fab fa-google"></i>
+            </a>
+        </div>
+        <!-- <p>&copy; 2023 My Portfolio</p> -->
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
