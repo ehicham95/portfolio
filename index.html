@@ -10,17 +10,13 @@
 <body>
     <header>
         <div class="header-content">
-            <div class="personal-info">
-                <h1>Hicham EL HADRACHI</h1>
-                <h2>Business Data Analyst</h2>
-            </div>
-            <nav>
-                <ul>
-                <li><a href="#about">About me</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+        <nav>
+            <ul>
+                <li><a href="#about" class="active" data-translate-key="aboutNavLink">About me</a></li>
+                <li><a href="#projects" data-translate-key="projectsNavLink">Portfolio</a></li> <!-- Changed to Portfolio as in your screenshot -->
+                <li><a href="#contact" data-translate-key="contactNavLink">Contact</a></li>
+            </ul>
+        </nav>
             <div class="language-switcher">
                 <div class="flag-container">
                     <img src="https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png" alt="English" class="flag-icon" id="selectedFlag" >
@@ -31,8 +27,15 @@
     </header>
     <main>
         <section id="about">
-            <h2>About Me</h2>
-            <p id="aboutText">Information about you and your background in data analysis.</p>
+            <h2 data-translate-key="aboutMeTitle">About Me</h2>
+            <div class="about-content">
+                <div class="about-text" id="aboutTextContainer">
+                    <!-- Paragraphs will be dynamically inserted here by JS -->
+                </div>
+                <div class="about-photo">
+                    <img src="your-photo.jpg" alt="Your professional headshot or profile picture">
+                </div>
+            </div>
         </section>
         <section id="projects">
             <h2>My Projects</h2>
@@ -41,8 +44,8 @@
             </div>
         </section>
     </main>
-    <footer>
-        <div id="contact" class="social-buttons">
+    <footer id="contact">
+        <div class="social-buttons"> <!-- Added an ID for potential future use if needed, but the class is key -->
             <a href="https://linkedin.com/in/yourprofile" class="social-button linkedin" aria-label="LinkedIn">
                 <i class="fab fa-linkedin-in"></i>
             </a>
@@ -56,7 +59,7 @@
                 <i class="fab fa-google"></i>
             </a>
         </div>
-        <!-- <p>&copy; 2023 My Portfolio</p> -->
+        <!-- <p>© 2023 My Portfolio</p> -->
     </footer>
     <script src="script.js"></script>
 </body>
