@@ -42,6 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedFlag = document.getElementById('selectedFlag');
     const alternativeFlag = document.querySelector('.alternative-flag');
 
+    const seeDetailsButtons = document.querySelectorAll('.see-details-btn');
+    const modal = document.getElementById('projectModal');
+    const modalTitle = document.getElementById('modalProjectTitle');
+    const modalDescription = document.getElementById('modalProjectDescription');
+    const closeButton = document.querySelector('.close');
+
     // --- Fetch translations first ---
     fetch('translations.json')
         .then(response => {
@@ -58,6 +64,22 @@ document.addEventListener('DOMContentLoaded', function() {
             highlightActiveNavLink(); // Set initial active nav link
         })
         .catch(error => console.error('Error loading translations:', error));
+
+
+        // Function to open the modal and populate it with project details
+    function openModal(projectId) {
+        const project = projectsData.find(p => p.id === projectId);
+        if (project) {
+            const modalTitle = document.getElementById('modalProjectTitle');
+            const modalDescription = document.getElementById('modalProjectDescription');
+            const modal = document.getElementById('projectModal');
+
+            modalTitle.textContent = translations[currentLang][project.titleKey];
+            modalDescription.textContent = translations[currentLang][project.descriptionKey];
+            modal.style.display = 'block';
+        }
+    }
+
 
     // --- Function to populate project cards ---
     function populateProjects() {
@@ -93,14 +115,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Create "See details" link
             if (project.detailsLink) { // Only create if a link exists
-                const detailsLink = document.createElement('a');
-                detailsLink.href = project.detailsLink;
-                detailsLink.className = 'project-link';
-                detailsLink.target = '_blank'; // Open in new tab
-                detailsLink.textContent = translations[currentLang]?.seeDetails || 'See details'; // Initial text, will be updated by updateTextContent
-                detailsLink.setAttribute('data-translate-key', 'seeDetails'); // Mark for translation
-                projectLinksContainer.appendChild(detailsLink);
+                const seeDetailsButton = document.createElement('button');
+                seeDetailsButton.className = 'see-details-btn project-link';  
+                seeDetailsButton.setAttribute('data-translate-key', 'seeDetails');
+                seeDetailsButton.textContent = translations[currentLang]['seeDetails'] || 'See details';
+
+                // Add click event to open the modal with the project details
+                seeDetailsButton.addEventListener('click', function() {
+                    openModal(project.id); // Pass the project ID to openModal
+                });
+                projectLinksContainer.appendChild(seeDetailsButton);
             }
+
 
             // Create "GitHub Page" link
             if (project.githubLink) { // Only create if a link exists
@@ -122,6 +148,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    
+
+    // Add event listeners to all "See details" buttons
+    seeDetailsButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const projectId = this.closest('.project-card').getAttribute('data-project-id');
+            openModal(projectId);
+        });
+    });
+
+    // Close the modal when the close button is clicked
+    closeButton.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    // Close the modal when clicking outside of the modal content
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+    
     // --- Function to update text content based on currentLang ---
     function updateTextContent() {
         if (!translations[currentLang]) {
@@ -272,4 +320,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Listen for scroll events to update active link
     window.addEventListener('scroll', highlightActiveNavLink);
+    
 });
