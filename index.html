@@ -46,13 +46,51 @@
         <!-- Modal for Project Details -->
         <div id="projectModal" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2 id="modalProjectTitle"></h2>
-                <p id="modalProjectDescription"></p>
+                <div class="modal-header">
+                    <h2 id="modalProjectTitle"></h2>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div id="modalProjectDetails">
+                        <div class="modal-section">
+                            <h3 data-translate-key="problemStatement"></h3>
+                            <p id="modalProblemStatement"></p>
+                        </div>
+                        <div class="modal-section">
+                            <h3 data-translate-key="dataSources"></h3>
+                            <p id="modalDataSources"></p>
+                        </div>
+                        <div class="modal-section">
+                            <h3 data-translate-key="methodology"></h3>
+                            <p id="modalMethodology"></p>
+                        </div>
+                        <div class="modal-section">
+                            <h3 data-translate-key="results"></h3>
+                            <p id="modalResults"></p>
+                        </div>
+                        <div class="modal-section">
+                            <h3 data-translate-key="challenges"></h3>
+                            <p id="modalChallenges"></p>
+                        </div>
+                        <div class="modal-section">
+                            <h3 data-translate-key="learnings"></h3>
+                            <p id="modalLearnings"></p>
+                        </div>
+                        <div class="modal-section" id="modalVisualizationsContainer">
+                            <h3 data-translate-key="visualizations"></h3>
+                            <div id="modalVisualizations"></div>
+                        </div>
+                        <div class="modal-section" id="modalPowerBiContainer">
+                            <h3 data-translate-key="powerBiDashboard"></h3>
+                            <iframe id="powerBiFrame" title="Power BI Report" width="100%" height="500" frameborder="0" allowFullScreen="true"></iframe>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
     <footer id="contact">
+        <h2 data-translate-key="contactTitle"></h2>
         <div class="social-buttons"> <!-- Added an ID for potential future use if needed, but the class is key -->
             <a href="https://linkedin.com/in/yourprofile" class="social-button linkedin" aria-label="LinkedIn">
                 <i class="fab fa-linkedin-in"></i>

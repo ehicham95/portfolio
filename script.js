@@ -1,38 +1,66 @@
 let translations = {}; // Store fetched translations
 let currentLang = 'en'; // Default language
 
-const projectsData = [ // Renamed to avoid confusion with translated projects
+const projectsData = [
     {
-        id: "salesDataAnalysis", // Add an ID for mapping to translations.json
+        id: "salesDataAnalysis",
         titleKey: "salesDataAnalysisTitle",
         descriptionKey: "salesDataAnalysisDesc",
-        tags: ["Python", "Pandas", "Matplotlib"],
-        detailsLink: "sales-details.html", // ADDED: Specific details link for each project
-        githubLink: "https://github.com/your-username/sales-data-analysis-repo" // Replace with actual repo link
+        tags: ["Python", "Pandas", "Matplotlib", "Power BI"],
+        githubLink: "https://github.com/your-username/sales-data-analysis-repo",
+        problemStatementKey: "salesProblemStatement",
+        dataSourcesKey: "salesDataSources",
+        methodologyKey: "salesMethodology",
+        resultsKey: "salesResults",
+        challengesKey: "salesChallenges",
+        learningsKey: "salesLearnings",
+        visualizations: ["/assets/sales_chart_1.png", "/assets/sales_dashboard_2.png"],
+        powerBiEmbedUrl: "https://app.powerbi.com/view?r=eyJrIjoiEXAMPLE-GUID-HERE-eyJiIjozLCJkIjo0fQ%3D%3D" // Example Power BI URL
     },
     {
         id: "customerSegmentation",
         titleKey: "customerSegmentationTitle",
         descriptionKey: "customerSegmentationDesc",
         tags: ["R", "K-means Clustering", "GGplot2"],
-        detailsLink: "customer-details.html", // ADDED
-        githubLink: "https://github.com/your-username/customer-segmentation-repo" // Replace with actual repo link
+        githubLink: "https://github.com/your-username/customer-segmentation-repo",
+        problemStatementKey: "customerProblemStatement",
+        dataSourcesKey: "customerDataSources",
+        methodologyKey: "customerMethodology",
+        resultsKey: "customerResults",
+        challengesKey: "customerChallenges",
+        learningsKey: "customerLearnings",
+        visualizations: [],
+        powerBiEmbedUrl: ""
     },
     {
         id: "websiteTrafficAnalysis",
         titleKey: "websiteTrafficAnalysisTitle",
         descriptionKey: "websiteTrafficAnalysisDesc",
         tags: ["SQL", "Tableau", "Google Analytics"],
-        detailsLink: "website-details.html", // ADDED
-        githubLink: "https://github.com/your-username/website-traffic-analysis-repo" // Replace with actual repo link
+        githubLink: "https://github.com/your-username/website-traffic-analysis-repo",
+        problemStatementKey: "websiteProblemStatement",
+        dataSourcesKey: "websiteDataSources",
+        methodologyKey: "websiteMethodology",
+        resultsKey: "websiteResults",
+        challengesKey: "websiteChallenges",
+        learningsKey: "websiteLearnings",
+        visualizations: [],
+        powerBiEmbedUrl: ""
     },
     {
         id: "socialMediaSentimentAnalysis",
         titleKey: "socialMediaSentimentAnalysisTitle",
         descriptionKey: "socialMediaSentimentAnalysisDesc",
         tags: ["Python", "NLTK", "Seaborn"],
-        detailsLink: "sentiment-details.html", // ADDED
-        githubLink: "https://github.com/your-username/social-media-sentiment-analysis-repo" // Replace with actual repo link
+        githubLink: "https://github.com/your-username/social-media-sentiment-analysis-repo",
+        problemStatementKey: "socialProblemStatement",
+        dataSourcesKey: "socialDataSources",
+        methodologyKey: "socialMethodology",
+        resultsKey: "socialResults",
+        challengesKey: "socialChallenges",
+        learningsKey: "socialLearnings",
+        visualizations: [],
+        powerBiEmbedUrl: ""
     }
 ];
 
@@ -70,13 +98,44 @@ document.addEventListener('DOMContentLoaded', function() {
     function openModal(projectId) {
         const project = projectsData.find(p => p.id === projectId);
         if (project) {
-            const modalTitle = document.getElementById('modalProjectTitle');
-            const modalDescription = document.getElementById('modalProjectDescription');
-            const modal = document.getElementById('projectModal');
+            // Update the modal's content with the new structure
+            document.getElementById('modalProjectTitle').textContent = translations[currentLang][project.titleKey];
+            document.getElementById('modalProblemStatement').textContent = translations[currentLang][project.problemStatementKey];
+            document.getElementById('modalDataSources').textContent = translations[currentLang][project.dataSourcesKey];
+            document.getElementById('modalMethodology').textContent = translations[currentLang][project.methodologyKey];
+            document.getElementById('modalResults').textContent = translations[currentLang][project.resultsKey];
+            document.getElementById('modalChallenges').textContent = translations[currentLang][project.challengesKey];
+            document.getElementById('modalLearnings').textContent = translations[currentLang][project.learningsKey];
 
-            modalTitle.textContent = translations[currentLang][project.titleKey];
-            modalDescription.textContent = translations[currentLang][project.descriptionKey];
-            modal.style.display = 'block';
+            // Handle visualizations
+            const visualizationsContainer = document.getElementById('modalVisualizations');
+            visualizationsContainer.innerHTML = ''; // Clear previous images
+            if (project.visualizations && project.visualizations.length > 0) {
+                document.getElementById('modalVisualizationsContainer').style.display = 'block';
+                project.visualizations.forEach(visUrl => {
+                    const img = document.createElement('img');
+                    img.src = visUrl;
+                    img.alt = "Project Visualization";
+                    img.style.maxWidth = '100%'; // Basic styling
+                    img.style.marginBottom = '10px';
+                    visualizationsContainer.appendChild(img);
+                });
+            } else {
+                document.getElementById('modalVisualizationsContainer').style.display = 'none';
+            }
+
+            // Handle Power BI embed
+            const powerBiContainer = document.getElementById('modalPowerBiContainer');
+            const powerBiFrame = document.getElementById('powerBiFrame');
+            if (project.powerBiEmbedUrl) {
+                powerBiContainer.style.display = 'block';
+                powerBiFrame.src = project.powerBiEmbedUrl;
+            } else {
+                powerBiContainer.style.display = 'none';
+            }
+
+            // Display the modal
+            document.getElementById('projectModal').style.display = 'block';
         }
     }
 
@@ -114,18 +173,16 @@ document.addEventListener('DOMContentLoaded', function() {
             projectLinksContainer.className = 'project-links';
 
             // Create "See details" link
-            if (project.detailsLink) { // Only create if a link exists
-                const seeDetailsButton = document.createElement('button');
-                seeDetailsButton.className = 'see-details-btn project-link';  
-                seeDetailsButton.setAttribute('data-translate-key', 'seeDetails');
-                seeDetailsButton.textContent = translations[currentLang]['seeDetails'] || 'See details';
+            const seeDetailsButton = document.createElement('button');
+            seeDetailsButton.className = 'see-details-btn project-link';
+            seeDetailsButton.setAttribute('data-translate-key', 'seeDetails');
+            seeDetailsButton.textContent = translations[currentLang]['seeDetails'] || 'See details';
 
-                // Add click event to open the modal with the project details
-                seeDetailsButton.addEventListener('click', function() {
-                    openModal(project.id); // Pass the project ID to openModal
-                });
-                projectLinksContainer.appendChild(seeDetailsButton);
-            }
+            // Add click event to open the modal with the project details
+            seeDetailsButton.addEventListener('click', function() {
+                openModal(project.id); // Pass the project ID to openModal
+            });
+            projectLinksContainer.appendChild(seeDetailsButton);
 
 
             // Create "GitHub Page" link
