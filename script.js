@@ -65,40 +65,26 @@ const projectsData = [
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
-    const projectsContainer = document.getElementById('projectsContainer'); // Ensure this ID exists on your projects container
-    const aboutTextElement = document.getElementById('aboutText'); // Ensure this ID exists on your "About Me" description
+    const projectsContainer = document.getElementById('projectsContainer');
+    const aboutTextElement = document.getElementById('aboutText');
     const selectedFlag = document.getElementById('selectedFlag');
     const alternativeFlag = document.querySelector('.alternative-flag');
-
-    const seeDetailsButtons = document.querySelectorAll('.see-details-btn');
     const modal = document.getElementById('projectModal');
-    const modalTitle = document.getElementById('modalProjectTitle');
-    const modalDescription = document.getElementById('modalProjectDescription');
     const closeButton = document.querySelector('.close');
 
-    // --- Fetch translations first ---
     fetch('translations.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
             translations = data;
-            // After translations are loaded, populate content
-            populateProjects(); // Populate projects first
-            updateTextContent(); // Then update all text content
-            highlightActiveNavLink(); // Set initial active nav link
+            populateProjects();
+            updateTextContent();
+            highlightActiveNavLink();
         })
         .catch(error => console.error('Error loading translations:', error));
 
-
-        // Function to open the modal and populate it with project details
     function openModal(projectId) {
         const project = projectsData.find(p => p.id === projectId);
         if (project) {
-            // Update the modal's content with the new structure
             document.getElementById('modalProjectTitle').textContent = translations[currentLang][project.titleKey];
             document.getElementById('modalProblemStatement').textContent = translations[currentLang][project.problemStatementKey];
             document.getElementById('modalDataSources').textContent = translations[currentLang][project.dataSourcesKey];
@@ -107,24 +93,20 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('modalChallenges').textContent = translations[currentLang][project.challengesKey];
             document.getElementById('modalLearnings').textContent = translations[currentLang][project.learningsKey];
 
-            // Handle visualizations
             const visualizationsContainer = document.getElementById('modalVisualizations');
-            visualizationsContainer.innerHTML = ''; // Clear previous images
+            visualizationsContainer.innerHTML = '';
             if (project.visualizations && project.visualizations.length > 0) {
                 document.getElementById('modalVisualizationsContainer').style.display = 'block';
                 project.visualizations.forEach(visUrl => {
                     const img = document.createElement('img');
                     img.src = visUrl;
                     img.alt = "Project Visualization";
-                    img.style.maxWidth = '100%'; // Basic styling
-                    img.style.marginBottom = '10px';
                     visualizationsContainer.appendChild(img);
                 });
             } else {
                 document.getElementById('modalVisualizationsContainer').style.display = 'none';
             }
 
-            // Handle Power BI embed
             const powerBiContainer = document.getElementById('modalPowerBiContainer');
             const powerBiFrame = document.getElementById('powerBiFrame');
             if (project.powerBiEmbedUrl) {
@@ -134,33 +116,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 powerBiContainer.style.display = 'none';
             }
 
-            // Display the modal
-            document.getElementById('projectModal').style.display = 'block';
+            modal.style.display = 'block';
         }
     }
 
-
-    // --- Function to populate project cards ---
     function populateProjects() {
-        // Clear existing projects if any (useful if calling this function multiple times)
         projectsContainer.innerHTML = '';
-
         projectsData.forEach(project => {
             const projectCard = document.createElement('div');
             projectCard.className = 'project-card';
-            projectCard.setAttribute('data-project-id', project.id); // Add data attribute for easier translation targeting
+            projectCard.setAttribute('data-project-id', project.id);
 
             const projectTitle = document.createElement('h3');
-            projectTitle.setAttribute('data-translate-key', project.titleKey); // Mark for translation
-            // Text content will be set by updateTextContent
+            projectTitle.setAttribute('data-translate-key', project.titleKey);
 
             const projectDescription = document.createElement('p');
-            projectDescription.setAttribute('data-translate-key', project.descriptionKey); // Mark for translation
-            // Text content will be set by updateTextContent
+            projectDescription.setAttribute('data-translate-key', project.descriptionKey);
 
-            const projectSkillsContainer = document.createElement('div'); // Renamed from projectDetails for clarity
+            const projectSkillsContainer = document.createElement('div');
             projectSkillsContainer.className = 'project-skills';
-
             project.tags.forEach(tag => {
                 const tagElement = document.createElement('span');
                 tagElement.className = 'project-tag';
@@ -168,201 +142,94 @@ document.addEventListener('DOMContentLoaded', function() {
                 projectSkillsContainer.appendChild(tagElement);
             });
 
-            // --- Create the project links container ---
             const projectLinksContainer = document.createElement('div');
             projectLinksContainer.className = 'project-links';
 
-            // Create "See details" link
             const seeDetailsButton = document.createElement('button');
             seeDetailsButton.className = 'see-details-btn project-link';
             seeDetailsButton.setAttribute('data-translate-key', 'seeDetails');
-            seeDetailsButton.textContent = translations[currentLang]['seeDetails'] || 'See details';
-
-            // Add click event to open the modal with the project details
-            seeDetailsButton.addEventListener('click', function() {
-                openModal(project.id); // Pass the project ID to openModal
-            });
+            seeDetailsButton.addEventListener('click', () => openModal(project.id));
             projectLinksContainer.appendChild(seeDetailsButton);
 
-
-            // Create "GitHub Page" link
-            if (project.githubLink) { // Only create if a link exists
+            if (project.githubLink) {
                 const githubLink = document.createElement('a');
                 githubLink.href = project.githubLink;
                 githubLink.className = 'project-link github-link';
-                githubLink.target = '_blank'; // Open in new tab
-                githubLink.innerHTML = `<i class="fab fa-github"></i> <span data-translate-key="githubPage">${translations[currentLang]?.githubPage || 'GitHub'}</span>`; // Initial text, will be updated by updateTextContent
+                githubLink.target = '_blank';
+                githubLink.innerHTML = `<i class="fab fa-github"></i> <span data-translate-key="githubPage"></span>`;
                 projectLinksContainer.appendChild(githubLink);
             }
 
-            // Append all parts to the card
             projectCard.appendChild(projectTitle);
             projectCard.appendChild(projectDescription);
             projectCard.appendChild(projectSkillsContainer);
-            projectCard.appendChild(projectLinksContainer); // Append the links container
-
+            projectCard.appendChild(projectLinksContainer);
             projectsContainer.appendChild(projectCard);
         });
     }
 
-    
-
-    // Add event listeners to all "See details" buttons
-    seeDetailsButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const projectId = this.closest('.project-card').getAttribute('data-project-id');
-            openModal(projectId);
-        });
-    });
-
-    // Close the modal when the close button is clicked
-    closeButton.addEventListener('click', function() {
-        modal.style.display = 'none';
-    });
-
-    // Close the modal when clicking outside of the modal content
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
-    
-    // --- Function to update text content based on currentLang ---
     function updateTextContent() {
-        if (!translations[currentLang]) {
-            console.warn(`Translations for language '${currentLang}' not found.`);
-            return;
-        }
+        if (!translations[currentLang]) return;
 
-        // Update About Me section
-        const aboutMeSectionTitle = document.querySelector('#about h2'); // Assuming your "About Me" title is an h2 inside #about
-        if (aboutMeSectionTitle && translations[currentLang].aboutMeTitle) {
-            aboutMeSectionTitle.textContent = translations[currentLang].aboutMeTitle;
-        }
-        if (aboutTextElement && translations[currentLang].aboutText) {
-            aboutTextElement.textContent = translations[currentLang].aboutText;
-        }
-
-        // Update My Projects section title
-        const projectsSectionTitle = document.querySelector('#projects h2'); // Assuming your "My Projects" title is an h2 inside #projects
-        if (projectsSectionTitle && translations[currentLang].myProjectsTitle) {
-            projectsSectionTitle.textContent = translations[currentLang].myProjectsTitle;
-        }
-
-
-        // Update project titles and descriptions
-        document.querySelectorAll('[data-project-id]').forEach(card => {
-            const projectId = card.getAttribute('data-project-id');
-            const projectData = projectsData.find(p => p.id === projectId); // Find original project data
-
-            if (projectData) {
-                const titleElement = card.querySelector('h3[data-translate-key]');
-                const descElement = card.querySelector('p[data-translate-key]');
-
-                if (titleElement && translations[currentLang][projectData.titleKey]) {
-                    titleElement.textContent = translations[currentLang][projectData.titleKey];
-                }
-                if (descElement && translations[currentLang][projectData.descriptionKey]) {
-                    descElement.textContent = translations[currentLang][projectData.descriptionKey];
+        document.querySelectorAll('[data-translate-key]').forEach(element => {
+            const key = element.getAttribute('data-translate-key');
+            if (translations[currentLang][key]) {
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                    element.placeholder = translations[currentLang][key];
+                } else {
+                    element.textContent = translations[currentLang][key];
                 }
             }
         });
 
-        // Update project link texts for all project cards
-        document.querySelectorAll('.project-link[data-translate-key="seeDetails"]').forEach(link => {
-            link.textContent = translations[currentLang]?.seeDetails || 'See details';
-        });
-
-        // Update GitHub Page link text (within the span if using icon)
-        document.querySelectorAll('.project-link.github-link span[data-translate-key="githubPage"]').forEach(span => {
-            span.textContent = translations[currentLang]?.githubPage || 'GitHub';
-        });
-
-        // Get the aboutText container
-        const aboutTextContainer = document.getElementById('aboutTextContainer'); // Use the new ID
+        const aboutTextContainer = document.getElementById('aboutTextContainer');
         if (aboutTextContainer && translations[currentLang].aboutText) {
-            aboutTextContainer.innerHTML = ''; // Clear previous content
-
-            // If aboutText is an array (multiple paragraphs)
+            aboutTextContainer.innerHTML = '';
             if (Array.isArray(translations[currentLang].aboutText)) {
                 translations[currentLang].aboutText.forEach(paragraphText => {
                     const p = document.createElement('p');
                     p.textContent = paragraphText;
                     aboutTextContainer.appendChild(p);
                 });
-            } else { // If it's a single string (fallback)
+            } else {
                 const p = document.createElement('p');
                 p.textContent = translations[currentLang].aboutText;
                 aboutTextContainer.appendChild(p);
             }
         }
-
-        // Handle all elements with a data-translate-key attribute
-        document.querySelectorAll('[data-translate-key]').forEach(element => {
-            const key = element.getAttribute('data-translate-key');
-            if (translations[currentLang][key]) {
-                // Skip aboutText as it's handled above
-                if (key === 'aboutText') return;
-
-                // Special handling for GitHub Page link to preserve icon
-                if (key === 'githubPage' && element.tagName === 'SPAN' && element.closest('.github-link')) {
-                    element.textContent = translations[currentLang][key];
-                } else if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                    // For input placeholders
-                    element.placeholder = translations[currentLang][key];
-                }
-                else {
-                    element.textContent = translations[currentLang][key];
-                }
-            }
-        });
-
-        console.log(`Language content updated to ${currentLang}`);
     }
 
-    // --- Language Switcher Logic ---
     window.switchLanguage = function() {
-        if (currentLang === 'en') {
-            selectedFlag.src = 'https://cdn.countryflags.com/thumbs/france/flag-400.png';
-            alternativeFlag.src = 'https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png';
-            currentLang = 'fr';
-        } else {
-            selectedFlag.src = 'https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png';
-            alternativeFlag.src = 'https://cdn.countryflags.com/thumbs/france/flag-400.png';
-            currentLang = 'en';
-        }
-        updateTextContent(); // Call update function after changing language
+        currentLang = currentLang === 'en' ? 'fr' : 'en';
+        const newFlag = currentLang === 'en' ? 'https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png' : 'https://cdn.countryflags.com/thumbs/france/flag-400.png';
+        const newAltFlag = currentLang === 'en' ? 'https://cdn.countryflags.com/thumbs/france/flag-400.png' : 'https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png';
+        selectedFlag.src = newFlag;
+        alternativeFlag.src = newAltFlag;
+        updateTextContent();
     };
 
-    // --- Smooth scrolling for navigation links & Active Link Highlighting ---
     document.querySelectorAll('nav a').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-
-            const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-
-            if (targetSection) {
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            if(targetSection){
                 window.scrollTo({
-                    top: targetSection.offsetTop - 80, // Offset for fixed header
+                    top: targetSection.offsetTop - 80,
                     behavior: 'smooth'
                 });
             }
-
-            // Update active state immediately on click
             document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
             this.classList.add('active');
         });
     });
 
-    // --- Highlight active navigation link based on scroll position ---
-    const sections = document.querySelectorAll('section[id]');
     function highlightActiveNavLink() {
         let current = '';
+        const sections = document.querySelectorAll('section[id]');
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100; // Adjust for header height
-            const sectionHeight = section.clientHeight;
-            if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+            const sectionTop = section.offsetTop - 100;
+            if (pageYOffset >= sectionTop) {
                 current = section.getAttribute('id');
             }
         });
@@ -375,7 +242,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Listen for scroll events to update active link
     window.addEventListener('scroll', highlightActiveNavLink);
-    
+
+    closeButton.addEventListener('click', () => modal.style.display = 'none');
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Intersection Observer for fade-in sections
+    const sectionsToFade = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    sectionsToFade.forEach(section => {
+        section.classList.add('fade-in-section');
+        observer.observe(section);
+    });
 });
