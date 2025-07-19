@@ -399,10 +399,18 @@ footer {
     border-bottom: 2px solid #f0f0f0;
 }
 
-.modal-section p {
+.modal-section p, .modal-section ul {
     line-height: 1.7;
     color: #555;
     text-align: justify;
+}
+
+.modal-section ul {
+    padding-left: 20px;
+}
+
+.modal-section li {
+    margin-bottom: 10px;
 }
 
 #modalVisualizations img {
@@ -418,6 +426,54 @@ footer {
     border: 1px solid #ddd;
     border-radius: 5px;
     min-height: 500px;
+}
+
+/* Skills Section Styling */
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.skills-category {
+    background-color: #f8f8f8;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.skills-category h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.skills-list {
+    list-style: disc; /* Use disc for bullet points */
+    padding-left: 20px; /* Indent for bullet points */
+    margin: 0;
+}
+
+.skill-item {
+    margin-bottom: 10px;
+    font-size: 1.05em;
+    color: #555;
+}
+
+.skill-item span {
+    font-family: 'Lato', sans-serif;
+}
+
+/* Responsive Adjustments for Skills */
+@media (max-width: 768px) {
+    .skills-container {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Responsive Design */

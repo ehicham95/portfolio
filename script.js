@@ -14,6 +14,9 @@ const projectsData = [
         resultsKey: "salesResults",
         challengesKey: "salesChallenges",
         learningsKey: "salesLearnings",
+        rootCauseAnalysisKey: "salesRootCauseAnalysis",
+        businessRecommendationsKey: "salesBusinessRecommendations",
+        estimatedBusinessImpactKey: "salesEstimatedBusinessImpact",
         visualizations: ["/assets/sales_chart_1.png", "/assets/sales_dashboard_2.png"],
         powerBiEmbedUrl: "https://app.powerbi.com/view?r=eyJrIjoiEXAMPLE-GUID-HERE-eyJiIjozLCJkIjo0fQ%3D%3D" // Example Power BI URL
     },
@@ -29,6 +32,9 @@ const projectsData = [
         resultsKey: "customerResults",
         challengesKey: "customerChallenges",
         learningsKey: "customerLearnings",
+        rootCauseAnalysisKey: "customerRootCauseAnalysis",
+        businessRecommendationsKey: "customerBusinessRecommendations",
+        estimatedBusinessImpactKey: "customerEstimatedBusinessImpact",
         visualizations: [],
         powerBiEmbedUrl: ""
     },
@@ -44,6 +50,9 @@ const projectsData = [
         resultsKey: "websiteResults",
         challengesKey: "websiteChallenges",
         learningsKey: "websiteLearnings",
+        rootCauseAnalysisKey: "websiteRootCauseAnalysis",
+        businessRecommendationsKey: "websiteBusinessRecommendations",
+        estimatedBusinessImpactKey: "websiteEstimatedBusinessImpact",
         visualizations: [],
         powerBiEmbedUrl: ""
     },
@@ -59,6 +68,9 @@ const projectsData = [
         resultsKey: "socialResults",
         challengesKey: "socialChallenges",
         learningsKey: "socialLearnings",
+        rootCauseAnalysisKey: "socialRootCauseAnalysis",
+        businessRecommendationsKey: "socialBusinessRecommendations",
+        estimatedBusinessImpactKey: "socialEstimatedBusinessImpact",
         visualizations: [],
         powerBiEmbedUrl: ""
     }
@@ -77,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             translations = data;
             populateProjects();
+            populateSkills(); // Call populateSkills after translations are loaded
             updateTextContent();
             highlightActiveNavLink();
         })
@@ -92,6 +105,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('modalResults').textContent = translations[currentLang][project.resultsKey];
             document.getElementById('modalChallenges').textContent = translations[currentLang][project.challengesKey];
             document.getElementById('modalLearnings').textContent = translations[currentLang][project.learningsKey];
+            document.getElementById('modalRootCauseAnalysis').textContent = translations[currentLang][project.rootCauseAnalysisKey];
+            document.getElementById('modalBusinessRecommendations').innerHTML = translations[currentLang][project.businessRecommendationsKey];
+            document.getElementById('modalEstimatedBusinessImpact').textContent = translations[currentLang][project.estimatedBusinessImpactKey];
 
             const visualizationsContainer = document.getElementById('modalVisualizations');
             visualizationsContainer.innerHTML = '';
@@ -168,6 +184,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Function to populate skills
+    function populateSkills() {
+        const skillsContainer = document.getElementById('skillsContainer');
+        skillsContainer.innerHTML = ''; // Clear existing skills
+
+        const skillsData = translations[currentLang].skills;
+
+        for (const categoryKey in skillsData) {
+            const category = skillsData[categoryKey];
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'skills-category';
+
+            const categoryTitle = document.createElement('h3');
+            categoryTitle.textContent = category.title;
+            categoryDiv.appendChild(categoryTitle);
+
+            const skillsList = document.createElement('ul');
+            skillsList.className = 'skills-list';
+
+            category.items.forEach(skill => {
+                const skillItem = document.createElement('li');
+                skillItem.className = 'skill-item';
+                skillItem.textContent = skill.name; // Display only the name, no icon
+                skillsList.appendChild(skillItem);
+            });
+
+            categoryDiv.appendChild(skillsList);
+            skillsContainer.appendChild(categoryDiv);
+        }
+    }
+
     function updateTextContent() {
         if (!translations[currentLang]) return;
 
@@ -197,6 +244,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 aboutTextContainer.appendChild(p);
             }
         }
+
+        // Re-populate skills to update their text content
+        populateSkills();
     }
 
     window.switchLanguage = function() {

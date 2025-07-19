@@ -13,6 +13,7 @@
         <nav>
             <ul>
                 <li><a href="#about" class="active" data-translate-key="aboutNavLink">About me</a></li>
+                <li><a href="#skills" data-translate-key="skillsNavLink">Skills</a></li>
                 <li><a href="#projects" data-translate-key="projectsNavLink">Portfolio</a></li> <!-- Changed to Portfolio as in your screenshot -->
                 <li><a href="#contact" data-translate-key="contactNavLink">Contact</a></li>
             </ul>
@@ -35,6 +36,12 @@
                 <div class="about-photo">
                     <img src="your-photo.jpg" alt="Your professional headshot or profile picture">
                 </div>
+            </div>
+        </section>
+        <section id="skills">
+            <h2 data-translate-key="skillsTitle">My Skills</h2>
+            <div class="skills-container" id="skillsContainer">
+                <!-- Skills will be dynamically inserted here by JavaScript -->
             </div>
         </section>
         <section id="projects">
@@ -75,6 +82,18 @@
                         <div class="modal-section">
                             <h3 data-translate-key="learnings"></h3>
                             <p id="modalLearnings"></p>
+                        </div>
+                        <div class="modal-section">
+                            <h3 data-translate-key="rootCauseAnalysis"></h3>
+                            <p id="modalRootCauseAnalysis"></p>
+                        </div>
+                        <div class="modal-section">
+                            <h3 data-translate-key="businessRecommendations"></h3>
+                            <div id="modalBusinessRecommendations"></div>
+                        </div>
+                        <div class="modal-section">
+                            <h3 data-translate-key="estimatedBusinessImpact"></h3>
+                            <p id="modalEstimatedBusinessImpact"></p>
                         </div>
                         <div class="modal-section" id="modalVisualizationsContainer">
                             <h3 data-translate-key="visualizations"></h3>
