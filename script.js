@@ -1,113 +1,45 @@
 let translations = {}; // Store fetched translations
+let projectsData = []; // Store fetched projects
 let currentLang = 'en'; // Default language
-
-const projectsData = [
-    {
-        id: "salesDataAnalysis",
-        titleKey: "salesDataAnalysisTitle",
-        descriptionKey: "salesDataAnalysisDesc",
-        tags: ["Python", "Pandas", "Matplotlib", "Power BI"],
-        githubLink: "https://github.com/your-username/sales-data-analysis-repo",
-        problemStatementKey: "salesProblemStatement",
-        dataSourcesKey: "salesDataSources",
-        methodologyKey: "salesMethodology",
-        resultsKey: "salesResults",
-        challengesKey: "salesChallenges",
-        learningsKey: "salesLearnings",
-        rootCauseAnalysisKey: "salesRootCauseAnalysis",
-        businessRecommendationsKey: "salesBusinessRecommendations",
-        estimatedBusinessImpactKey: "salesEstimatedBusinessImpact",
-        visualizations: ["/assets/sales_chart_1.png", "/assets/sales_dashboard_2.png"],
-        powerBiEmbedUrl: "https://app.powerbi.com/view?r=eyJrIjoiEXAMPLE-GUID-HERE-eyJiIjozLCJkIjo0fQ%3D%3D" // Example Power BI URL
-    },
-    {
-        id: "customerSegmentation",
-        titleKey: "customerSegmentationTitle",
-        descriptionKey: "customerSegmentationDesc",
-        tags: ["R", "K-means Clustering", "GGplot2"],
-        githubLink: "https://github.com/your-username/customer-segmentation-repo",
-        problemStatementKey: "customerProblemStatement",
-        dataSourcesKey: "customerDataSources",
-        methodologyKey: "customerMethodology",
-        resultsKey: "customerResults",
-        challengesKey: "customerChallenges",
-        learningsKey: "customerLearnings",
-        rootCauseAnalysisKey: "customerRootCauseAnalysis",
-        businessRecommendationsKey: "customerBusinessRecommendations",
-        estimatedBusinessImpactKey: "customerEstimatedBusinessImpact",
-        visualizations: [],
-        powerBiEmbedUrl: ""
-    },
-    {
-        id: "websiteTrafficAnalysis",
-        titleKey: "websiteTrafficAnalysisTitle",
-        descriptionKey: "websiteTrafficAnalysisDesc",
-        tags: ["SQL", "Tableau", "Google Analytics"],
-        githubLink: "https://github.com/your-username/website-traffic-analysis-repo",
-        problemStatementKey: "websiteProblemStatement",
-        dataSourcesKey: "websiteDataSources",
-        methodologyKey: "websiteMethodology",
-        resultsKey: "websiteResults",
-        challengesKey: "websiteChallenges",
-        learningsKey: "websiteLearnings",
-        rootCauseAnalysisKey: "websiteRootCauseAnalysis",
-        businessRecommendationsKey: "websiteBusinessRecommendations",
-        estimatedBusinessImpactKey: "websiteEstimatedBusinessImpact",
-        visualizations: [],
-        powerBiEmbedUrl: ""
-    },
-    {
-        id: "socialMediaSentimentAnalysis",
-        titleKey: "socialMediaSentimentAnalysisTitle",
-        descriptionKey: "socialMediaSentimentAnalysisDesc",
-        tags: ["Python", "NLTK", "Seaborn"],
-        githubLink: "https://github.com/your-username/social-media-sentiment-analysis-repo",
-        problemStatementKey: "socialProblemStatement",
-        dataSourcesKey: "socialDataSources",
-        methodologyKey: "socialMethodology",
-        resultsKey: "socialResults",
-        challengesKey: "socialChallenges",
-        learningsKey: "socialLearnings",
-        rootCauseAnalysisKey: "socialRootCauseAnalysis",
-        businessRecommendationsKey: "socialBusinessRecommendations",
-        estimatedBusinessImpactKey: "socialEstimatedBusinessImpact",
-        visualizations: [],
-        powerBiEmbedUrl: ""
-    }
-];
 
 document.addEventListener('DOMContentLoaded', function() {
     const projectsContainer = document.getElementById('projectsContainer');
-    const aboutTextElement = document.getElementById('aboutText');
     const selectedFlag = document.getElementById('selectedFlag');
     const alternativeFlag = document.querySelector('.alternative-flag');
     const modal = document.getElementById('projectModal');
     const closeButton = document.querySelector('.close');
 
-    fetch('translations.json')
-        .then(response => response.json())
-        .then(data => {
-            translations = data;
-            populateProjects();
-            populateSkills(); // Call populateSkills after translations are loaded
-            updateTextContent();
-            highlightActiveNavLink();
-        })
-        .catch(error => console.error('Error loading translations:', error));
+    // Fetch all necessary data
+    Promise.all([
+        fetch('translations.json').then(response => response.json()),
+        fetch('projects.json').then(response => response.json())
+    ])
+    .then(([translationsData, projects]) => {
+        translations = translationsData;
+        projectsData = projects;
+        
+        populateProjects();
+        populateSkills();
+        updateTextContent();
+        highlightActiveNavLink();
+    })
+    .catch(error => console.error('Error loading data:', error));
 
     function openModal(projectId) {
         const project = projectsData.find(p => p.id === projectId);
-        if (project) {
-            document.getElementById('modalProjectTitle').textContent = translations[currentLang][project.titleKey];
-            document.getElementById('modalProblemStatement').textContent = translations[currentLang][project.problemStatementKey];
-            document.getElementById('modalDataSources').textContent = translations[currentLang][project.dataSourcesKey];
-            document.getElementById('modalMethodology').textContent = translations[currentLang][project.methodologyKey];
-            document.getElementById('modalResults').textContent = translations[currentLang][project.resultsKey];
-            document.getElementById('modalChallenges').textContent = translations[currentLang][project.challengesKey];
-            document.getElementById('modalLearnings').textContent = translations[currentLang][project.learningsKey];
-            document.getElementById('modalRootCauseAnalysis').textContent = translations[currentLang][project.rootCauseAnalysisKey];
-            document.getElementById('modalBusinessRecommendations').innerHTML = translations[currentLang][project.businessRecommendationsKey];
-            document.getElementById('modalEstimatedBusinessImpact').textContent = translations[currentLang][project.estimatedBusinessImpactKey];
+        if (project && project[currentLang]) {
+            const projectLangData = project[currentLang];
+
+            document.getElementById('modalProjectTitle').textContent = projectLangData.title;
+            document.getElementById('modalProblemStatement').textContent = projectLangData.problemStatement;
+            document.getElementById('modalDataSources').textContent = projectLangData.dataSources;
+            document.getElementById('modalMethodology').textContent = projectLangData.methodology;
+            document.getElementById('modalResults').textContent = projectLangData.results;
+            document.getElementById('modalChallenges').textContent = projectLangData.challenges;
+            document.getElementById('modalLearnings').textContent = projectLangData.learnings;
+            document.getElementById('modalRootCauseAnalysis').textContent = projectLangData.rootCauseAnalysis;
+            document.getElementById('modalBusinessRecommendations').innerHTML = projectLangData.businessRecommendations;
+            document.getElementById('modalEstimatedBusinessImpact').textContent = projectLangData.estimatedBusinessImpact;
 
             const visualizationsContainer = document.getElementById('modalVisualizations');
             visualizationsContainer.innerHTML = '';
@@ -139,52 +71,55 @@ document.addEventListener('DOMContentLoaded', function() {
     function populateProjects() {
         projectsContainer.innerHTML = '';
         projectsData.forEach(project => {
-            const projectCard = document.createElement('div');
-            projectCard.className = 'project-card';
-            projectCard.setAttribute('data-project-id', project.id);
+            if (project[currentLang]) {
+                const projectLangData = project[currentLang];
+                const projectCard = document.createElement('div');
+                projectCard.className = 'project-card';
+                projectCard.setAttribute('data-project-id', project.id);
 
-            const projectTitle = document.createElement('h3');
-            projectTitle.setAttribute('data-translate-key', project.titleKey);
+                const projectTitle = document.createElement('h3');
+                projectTitle.textContent = projectLangData.title;
 
-            const projectDescription = document.createElement('p');
-            projectDescription.setAttribute('data-translate-key', project.descriptionKey);
+                const projectDescription = document.createElement('p');
+                projectDescription.textContent = projectLangData.description;
 
-            const projectSkillsContainer = document.createElement('div');
-            projectSkillsContainer.className = 'project-skills';
-            project.tags.forEach(tag => {
-                const tagElement = document.createElement('span');
-                tagElement.className = 'project-tag';
-                tagElement.textContent = tag;
-                projectSkillsContainer.appendChild(tagElement);
-            });
+                const projectSkillsContainer = document.createElement('div');
+                projectSkillsContainer.className = 'project-skills';
+                project.tags.forEach(tag => {
+                    const tagElement = document.createElement('span');
+                    tagElement.className = 'project-tag';
+                    tagElement.textContent = tag;
+                    projectSkillsContainer.appendChild(tagElement);
+                });
 
-            const projectLinksContainer = document.createElement('div');
-            projectLinksContainer.className = 'project-links';
+                const projectLinksContainer = document.createElement('div');
+                projectLinksContainer.className = 'project-links';
 
-            const seeDetailsButton = document.createElement('button');
-            seeDetailsButton.className = 'see-details-btn project-link';
-            seeDetailsButton.setAttribute('data-translate-key', 'seeDetails');
-            seeDetailsButton.addEventListener('click', () => openModal(project.id));
-            projectLinksContainer.appendChild(seeDetailsButton);
+                const seeDetailsButton = document.createElement('button');
+                seeDetailsButton.className = 'see-details-btn project-link';
+                seeDetailsButton.setAttribute('data-translate-key', 'seeDetails');
+                seeDetailsButton.textContent = translations[currentLang].seeDetails;
+                seeDetailsButton.addEventListener('click', () => openModal(project.id));
+                projectLinksContainer.appendChild(seeDetailsButton);
 
-            if (project.githubLink) {
-                const githubLink = document.createElement('a');
-                githubLink.href = project.githubLink;
-                githubLink.className = 'project-link github-link';
-                githubLink.target = '_blank';
-                githubLink.innerHTML = `<i class="fab fa-github"></i> <span data-translate-key="githubPage"></span>`;
-                projectLinksContainer.appendChild(githubLink);
+                if (project.githubLink) {
+                    const githubLink = document.createElement('a');
+                    githubLink.href = project.githubLink;
+                    githubLink.className = 'project-link github-link';
+                    githubLink.target = '_blank';
+                    githubLink.innerHTML = `<i class="fab fa-github"></i> <span data-translate-key="githubPage">${translations[currentLang].githubPage}</span>`;
+                    projectLinksContainer.appendChild(githubLink);
+                }
+
+                projectCard.appendChild(projectTitle);
+                projectCard.appendChild(projectDescription);
+                projectCard.appendChild(projectSkillsContainer);
+                projectCard.appendChild(projectLinksContainer);
+                projectsContainer.appendChild(projectCard);
             }
-
-            projectCard.appendChild(projectTitle);
-            projectCard.appendChild(projectDescription);
-            projectCard.appendChild(projectSkillsContainer);
-            projectCard.appendChild(projectLinksContainer);
-            projectsContainer.appendChild(projectCard);
         });
     }
 
-    // Function to populate skills
     function populateSkills() {
         const skillsContainer = document.getElementById('skillsContainer');
         skillsContainer.innerHTML = ''; // Clear existing skills
@@ -244,8 +179,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 aboutTextContainer.appendChild(p);
             }
         }
-
-        // Re-populate skills to update their text content
+        
+        // Re-populate projects and skills to update their text content
+        populateProjects();
         populateSkills();
     }
 
