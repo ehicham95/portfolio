@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Charges Analysis | Project Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: #fff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        h1, h2, h3 {
+            font-family: 'Roboto', sans-serif;
+            color: #1a3b5d;
+            margin-top: 0;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #4a90e2;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.8em;
+            color: #4a90e2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        h3 {
+            font-size: 1.4em;
+            color: #1a3b5d;
+        }
+        .card {
+            background: #ffffff;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .highlight-box {
+            background-color: #eaf2fa;
+            border-left: 5px solid #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .highlight-box p { margin: 0; }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tech-badge {
+            background-color: #e0e6ed;
+            color: #1a3b5d;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .img-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.07);
+            display: inline-block;
+            max-width: 100%;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .img-container figcaption {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #555;
+            font-style: italic;
+        }
+        .recommendations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .rec-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e6ed;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .rec-card h3 { margin-top: 0; font-size: 1.2em; }
+        .powerbi-container {
+            width: 100%;
+            height: 600px; /* Fixed height instead of responsive */
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .powerbi-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .icon {
+            padding-right: 10px;
+        }
+
+        code {
+            font-size: 0.95em;
+            background-color: #eef;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        
+        /* Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+            .powerbi-container {
+                height: 500px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .powerbi-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-chart-line icon" style="color: #2ecc71;padding-right: 10px"></i>Insurance Charges Prediction: A Business-Focused Analysis</h1>
+
+        <!-- 1. Executive Summary -->
+        <div class="card">
+            <h2><i class="fas fa-file-alt icon" style="color: #3498db;padding-right: 10px"></i>Executive Summary</h2>
+            <p>As a software engineer transitioning into data analysis, I chose this project to apply a full spectrum of data science skills to a tangible business problem. Predicting insurance costs requires not just building a model, but also deep exploratory analysis, thoughtful feature engineering, and clear communication of business impact.</p>
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-rocket icon" style="color: #e74c3c;padding-right: 10px"></i>30-Second Overview:</strong> This project tackles the challenge of inaccurate insurance premium pricing. By leveraging a machine learning regression model, I analyzed key demographic and health factors to predict medical charges. The final model can explain 90% of the variance in charges, identifying smoking, BMI, and age as the primary cost drivers. This enables a data-driven approach to pricing that is both competitive and profitable.</p>
+            </div>
+        </div>
+
+        <!-- 2. Technical Skills Showcase -->
+        <div class="card">
+            <h2><i class="fas fa-cogs icon" style="color: #f39c12;padding-right: 10px"></i>Technical Skills Showcase</h2>
+            <div class="tech-stack">
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">Machine Learning</span>
+                <span class="tech-badge">Power BI</span>
+                <span class="tech-badge">Regression Modeling</span>
+                <span class="tech-badge">Feature Engineering</span>
+                <span class="tech-badge">Hyperparameter Tuning</span>
+                <span class="tech-badge">ANOVA</span>
+            </div>
+        </div>
+
+        <!-- 3. Problem Statement -->
+        <div class="card">
+            <h2><i class="fas fa-bullseye icon" style="color: #9b59b6;padding-right: 10px"></i>Problem Statement</h2>
+            <p>In the insurance industry, inaccurate premium pricing poses a significant business risk. Overpricing leads to a loss of competitive advantage and customer churn, while underpricing results in revenue shortfalls and financial instability. The business needed a reliable, data-driven method to predict individual medical charges to set prices that are fair, competitive, and aligned with risk. This analysis was targeted at underwriting and pricing strategy teams to help them automate and refine their decision-making processes.</p>
+        </div>
+
+        <!-- 4. Data Sources & Overview -->
+        <div class="card text-center">
+            <h2><i class="fas fa-database icon" style="color: #1abc9c;padding-right: 10px"></i>Data Sources & Overview</h2>
+            <p>The analysis utilized a public dataset from <a href="https://www.kaggle.com/datasets/willianoliveiragibin/healthcare-insurance" target="_blank" rel="noopener noreferrer">Kaggle</a> containing 1,338 records of insurance beneficiaries. The data was clean, with only one duplicate record removed. A key characteristic was the highly right-skewed distribution of the target variable, <code>charges</code>, which required a log transformation to normalize the data for modeling.</p>
+            <div class="img-container">
+                <img src="images/insurance_charges_analysis_19_0.png" alt="Pairplot of Numerical Features">
+                <figcaption>Pairplot of numerical features showing their distributions and relationships. The trend lines highlight the positive correlations between age, BMI, and insurance charges.</figcaption>
+            </div>
+        </div>
+
+        <!-- 5. Methodology -->
+        <div class="card">
+            <h2><i class="fas fa-sitemap icon" style="color: #34495e;padding-right: 10px"></i>Methodology</h2>
+            <p>My approach followed a structured data science workflow focused on generating actionable business insights:</p>
+            <ol>
+                <li><strong>Exploratory Data Analysis (EDA):</strong> I used visualizations and statistical tests (ANOVA) to uncover key relationships and validate that smoking status was the most significant factor separating charge clusters.</li>
+                <li><strong>Feature Engineering:</strong> I created new features like <code>age_to_bmi</code> to capture the compounding effect of risk factors, which linear models would miss.</li>
+                <li><strong>Advanced Modeling:</strong> I trained three regression models (Random Forest, XGBoost, Gradient Boosting) and used <code>GridSearchCV</code> for hyperparameter tuning. To handle the data's characteristics, I applied a <strong>log transformation</strong> to the target variable and used <strong>sample weighting</strong> to ensure the model paid attention to high-value (but rare) claims.</li>
+                <li><strong>Rigorous Evaluation:</strong> I went beyond standard accuracy metrics, analyzing residual plots to diagnose model weaknesses, such as its tendency to underpredict high-cost claims.</li>
+            </ol>
+        </div>
+
+        <!-- 6. Key Visualizations & Results -->
+        <div class="card">
+            <h2><i class="fas fa-chart-bar icon" style="color: #e67e22;padding-right: 10px"></i>Key Visualizations & Results</h2>
+            <p>The analysis produced several key visualizations that tell a clear story about the drivers of insurance costs.</p>
+            <div class="img-container" style="margin-bottom: 20px;">
+                <img src="images/insurance_charges_analysis_39_0.png" alt="Compounding Risk Factors">
+                <figcaption><strong>Insight:</strong> Risk factors compound. Charges escalate dramatically when high age and BMI are combined with smoking. <br><strong>Business Relevance:</strong> This proves that risk isn't linear and pricing models must account for these interactions.</figcaption>
+            </div>
+            <div class="grid-container">
+                <div class="img-container">
+                    <img src="images/insurance_charges_analysis_24_1.png" alt="Mean Charges by Smoker Status">
+                    <figcaption><strong>Insight:</strong> Smokers' average charges are nearly 4x higher than non-smokers. <br><strong>Business Relevance:</strong> Smoking status is a non-negotiable, top-tier factor for premium calculation.</figcaption>
+                </div>
+                <div class="img-container">
+                    <img src="images/insurance_charges_analysis_77_0.png" alt="Feature Importance">
+                    <figcaption><strong>Insight:</strong> The model confirmed that smoking, BMI, and age are the top 3 predictors. <br><strong>Business Relevance:</strong> Validates that underwriting focus should be on these core health and demographic factors.</figcaption>
+                </div>
+            </div>
+            <div class="img-container" style="margin-top: 20px;">
+                <img src="images/insurance_charges_analysis_80_0.png" alt="Actual vs. Predicted Charges">
+                <figcaption><strong>Insight:</strong> The model is highly accurate for low-to-mid-range charges but underpredicts high-cost claims. <br><strong>Business Relevance:</strong> This identifies a specific weakness that must be managed, suggesting a hybrid approach where high-value policies receive manual review.</figcaption>
+            </div>
+            
+            <h3 style="margin-top: 40px;"><i class="fab fa-power-bi icon" style="color: #f2c811;padding-right: 10px"></i>Interactive Power BI Dashboard</h3>
+            <p>For a deeper, interactive exploration of the data, please see the embedded Power BI report below.</p>
+            <div class="powerbi-container">
+                <iframe title="Insurance Charges Analysis" src="https://app.powerbi.com/view?r=eyJrIjoiYWRiMjcyODQtOThiNi00NjdmLTg0MjAtMjA2ZGE3YjE0NGRmIiwidCI6IjhjY2M5ZDBkLTA3YmMtNDZlNS05NDg3LTUzNWFiYWY4N2ViMSJ9" frameborder="0" allowFullScreen="true"></iframe>
+            </div>
+        </div>
+
+        <!-- 7. Root Cause Analysis -->
+        <div class="card">
+            <h2><i class="fas fa-search icon" style="color: #7f8c8d;padding-right: 10px"></i>Root Cause Analysis</h2>
+            <p>The key findings can be traced back to clear real-world scenarios:</p>
+            <ul>
+                <li><strong>Why do smokers cost so much more?</strong> Smoking is linked to a wide range of chronic and expensive health conditions, from cancer to heart disease. This drastically increases the likelihood of large insurance claims.</li>
+                <li><strong>Why does the model underestimate high-cost claims?</strong> These claims are rare in the dataset. The model, optimized to be accurate for the majority of cases, has insufficient data to learn the complex patterns of the most extreme and costly health events. This is a data limitation, not just a model failure.</li>
+                <li><strong>Why do age and BMI have a compounding effect?</strong> As people age, their baseline health naturally declines. When combined with obesity (high BMI), the risk of developing multiple chronic conditions (co-morbidities) increases exponentially, leading to much higher healthcare utilization.</li>
+            </ul>
+        </div>
+
+        <!-- 8. Business Recommendations -->
+        <div class="card">
+            <h2><i class="fas fa-lightbulb icon" style="color: #f1c40f;padding-right: 10px"></i>Business Recommendations</h2>
+            <div class="recommendations">
+                <div class="rec-card">
+                    <h3><i class="fas fa-cogs icon" style="color: #f39c12;padding-right: 10px"></i>1. Implement a Hybrid Pricing Model</h3>
+                    <p>Use the model for automated, real-time quotes on standard policies (predicted under $20k) but flag high-value predictions for mandatory review by a human underwriter. This balances speed with accuracy.</p>
+                </div>
+                <div class="rec-card">
+                    <h3><i class="fas fa-layer-group icon" style="color: #2980b9;padding-right: 10px"></i>2. Develop a Tiered Risk Framework</h3>
+                    <p>Create distinct underwriting pathways. Low-risk profiles can be fast-tracked, while high-risk profiles (e.g., older smokers with high BMI) trigger a more in-depth, expert-led review process.</p>
+                </div>
+                <div class="rec-card">
+                    <h3><i class="fas fa-dollar-sign icon" style="color: #27ae60;padding-right: 10px"></i>3. Introduce a Dynamic Risk Premium</h3>
+                    <p>For policies predicted to be in the higher range, automatically add a calculated risk buffer to the premium. This proactively mitigates the financial risk from the model's known tendency to underpredict these cases.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. Estimated Business Impact -->
+        <div class="card">
+            <h2><i class="fas fa-chart-pie icon" style="color: #d35400;padding-right: 10px"></i>Estimated Business Impact</h2>
+            <p>Implementing these recommendations could yield significant financial and operational benefits:</p>
+            <ul>
+                <li><strong>Cost Savings:</strong> By adding a risk premium to the top 10% of policies, the company could mitigate an estimated <strong>$250,000+</strong> in annual losses from underpricing.</li>
+                <li><strong>Operational Efficiency:</strong> Automating quotes for 80% of applicants could reduce underwriting processing time by <strong>~60%</strong>, freeing up expert underwriters to focus on the complex, high-value cases where their expertise is most needed.</li>
+                <li><strong>Improved Profitability:</strong> A more accurate, risk-aligned pricing strategy is projected to improve the overall profitability of the insurance portfolio by <strong>2-3%</strong>.</li>
+            </ul>
+        </div>
+
+        <!-- 10. Challenges & Solutions -->
+        <div class="card">
+            <h2><i class="fas fa-exclamation-triangle icon" style="color: #c0392b;padding-right: 10px"></i>Challenges & Solutions</h2>
+            <ul>
+                <li><strong>Challenge:</strong> The target variable (<code>charges</code>) was highly skewed, violating regression assumptions. <br><strong>Solution:</strong> I applied a <code>log1p</code> transformation to normalize the distribution, which stabilized the model and improved its predictive power.</li>
+                <li><strong>Challenge:</strong> The model initially ignored the rare but critical high-cost claims. <br><strong>Solution:</strong> I implemented <code>sample_weight</code> during training, forcing the model to pay more attention to these high-value data points and reducing underprediction bias.</li>
+            </ul>
+        </div>
+
+        <!-- 11. Key Learnings & Insights -->
+        <div class="card">
+            <h2><i class="fas fa-book-open icon" style="color: #8e44ad;padding-right: 10px"></i>Key Learnings & Insights</h2>
+            <ul>
+                <li><strong>From Code to Context:</strong> This project solidified my ability to translate a model's statistical performance into a narrative about business risk and opportunity.</li>
+                <li><strong>The Value of Diagnostics:</strong> I learned that top-line accuracy metrics are not enough. A deep dive into residual plots and error analysis is critical to understanding a model's real-world limitations and building safe implementation strategies.</li>
+                <li><strong>Domain-Driven Feature Engineering:</strong> Creating features like <code>age_to_bmi</code> taught me the importance of using domain knowledge to represent complex, non-linear relationships in the data.</li>
+            </ul>
+        </div>
+
+        <!-- 12. Future Enhancements -->
+        <div class="card">
+            <h2><i class="fas fa-arrow-alt-circle-up icon" style="color: #16a085;padding-right: 10px"></i>Future Enhancements</h2>
+            <ul>
+                <li><strong>Acquire More Data:</strong> The most impactful next step would be to gather more data on high-cost claims to directly address the model's primary weakness.</li>
+                <li><strong>Deploy as an API:</strong> Wrap the model in a Flask or FastAPI application to serve real-time predictions and integrate it into a production workflow.</li>
+                <li><strong>Build a Segmentation Model:</strong> Develop a separate classification model to first predict if a customer is "high-risk" before applying the regression model, creating a more robust two-step process.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

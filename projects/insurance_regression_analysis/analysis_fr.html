@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse des Frais d'Assurance | Présentation du Projet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: #fff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        h1, h2, h3 {
+            font-family: 'Roboto', sans-serif;
+            color: #1a3b5d;
+            margin-top: 0;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #4a90e2;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.8em;
+            color: #4a90e2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        h3 {
+            font-size: 1.4em;
+            color: #1a3b5d;
+        }
+        .card {
+            background: #ffffff;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .highlight-box {
+            background-color: #eaf2fa;
+            border-left: 5px solid #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .highlight-box p { margin: 0; }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tech-badge {
+            background-color: #e0e6ed;
+            color: #1a3b5d;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .img-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.07);
+            display: inline-block;
+            max-width: 100%;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .img-container figcaption {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #555;
+            font-style: italic;
+        }
+        .recommendations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .rec-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e6ed;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .rec-card h3 { margin-top: 0; font-size: 1.2em; }
+        .powerbi-container {
+            width: 100%;
+            height: 600px; /* Fixed height instead of responsive */
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .powerbi-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .icon {
+            padding-right: 10px;
+        }
+
+        code {
+            font-size: 0.95em;
+            background-color: #eef;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        
+        /* Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+            .powerbi-container {
+                height: 500px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .powerbi-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-chart-line icon" style="color: #2ecc71;padding-right: 10px"></i>Prédiction des Frais d'Assurance : Une Analyse Axée sur le Business</h1>
+
+        <!-- 1. Executive Summary -->
+        <div class="card">
+            <h2><i class="fas fa-file-alt icon" style="color: #3498db;padding-right: 10px"></i>Résumé Exécutif</h2>
+            <p>En tant qu'ingénieur logiciel en transition vers l'analyse de données, j'ai choisi ce projet pour appliquer un éventail complet de compétences en science des données à un problème commercial tangible. Prédire les coûts d'assurance ne nécessite pas seulement de construire un modèle, mais aussi une analyse exploratoire approfondie, une ingénierie des fonctionnalités réfléchie et une communication claire de l'impact commercial.</p>
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-rocket icon" style="color: #e74c3c;padding-right: 10px"></i>Aperçu en 30 secondes :</strong> Ce projet aborde le défi de la tarification inexacte des primes d'assurance. En utilisant un modèle de régression par apprentissage automatique, j'ai analysé des facteurs démographiques et de santé clés pour prédire les frais médicaux. Le modèle final peut expliquer 90 % de la variance des frais, identifiant le tabagisme, l'IMC et l'âge comme les principaux inducteurs de coûts. Cela permet une approche de tarification basée sur les données qui est à la fois compétitive et rentable.</p>
+            </div>
+        </div>
+
+        <!-- 2. Technical Skills Showcase -->
+        <div class="card">
+            <h2><i class="fas fa-cogs icon" style="color: #f39c12;padding-right: 10px"></i>Vitrine des Compétences Techniques</h2>
+            <div class="tech-stack">
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">Machine Learning</span>
+                <span class="tech-badge">Power BI</span>
+                <span class="tech-badge">Modélisation de Régression</span>
+                <span class="tech-badge">Ingénierie des Fonctionnalités</span>
+                <span class="tech-badge">Optimisation des Hyperparamètres</span>
+                <span class="tech-badge">ANOVA</span>
+            </div>
+        </div>
+
+        <!-- 3. Problem Statement -->
+        <div class="card">
+            <h2><i class="fas fa-bullseye icon" style="color: #9b59b6;padding-right: 10px"></i>Énoncé du Problème</h2>
+            <p>Dans le secteur de l'assurance, une tarification inexacte des primes constitue un risque commercial important. La surtarification entraîne une perte d'avantage concurrentiel et une perte de clientèle, tandis que la sous-tarification se traduit par des manques à gagner et une instabilité financière. L'entreprise avait besoin d'une méthode fiable et basée sur les données pour prédire les frais médicaux individuels afin de fixer des prix justes, compétitifs et alignés sur le risque. Cette analyse visait les équipes de souscription et de stratégie de tarification pour les aider à automatiser et à affiner leurs processus de prise de décision.</p>
+        </div>
+
+        <!-- 4. Data Sources & Overview -->
+        <div class="card text-center">
+            <h2><i class="fas fa-database icon" style="color: #1abc9c;padding-right: 10px"></i>Sources de Données et Aperçu</h2>
+            <p>L'analyse a utilisé un ensemble de données public de <a href="https://www.kaggle.com/datasets/willianoliveiragibin/healthcare-insurance" target="_blank" rel="noopener noreferrer">Kaggle</a> contenant 1 338 enregistrements de bénéficiaires d'assurance. Les données étaient propres, avec un seul enregistrement en double supprimé. Une caractéristique clé était la distribution très asymétrique à droite de la variable cible, <code>charges</code>, qui a nécessité une transformation logarithmique pour normaliser les données pour la modélisation.</p>
+            <div class="img-container">
+                <img src="images/insurance_charges_analysis_19_0.png" alt="Pairplot des caractéristiques numériques">
+                <figcaption>Pairplot des caractéristiques numériques montrant leurs distributions et leurs relations. Les lignes de tendance mettent en évidence les corrélations positives entre l'âge, l'IMC et les frais d'assurance.</figcaption>
+            </div>
+        </div>
+
+        <!-- 5. Methodology -->
+        <div class="card">
+            <h2><i class="fas fa-sitemap icon" style="color: #34495e;padding-right: 10px"></i>Méthodologie</h2>
+            <p>Mon approche a suivi un flux de travail structuré en science des données axé sur la génération d'informations commerciales exploitables :</p>
+            <ol>
+                <li><strong>Analyse Exploratoire des Données (EDA) :</strong> J'ai utilisé des visualisations et des tests statistiques (ANOVA) pour découvrir les relations clés et valider que le statut de fumeur était le facteur le plus significatif séparant les groupes de frais.</li>
+                <li><strong>Ingénierie des Fonctionnalités :</strong> J'ai créé de nouvelles fonctionnalités comme <code>age_to_bmi</code> pour capturer l'effet cumulatif des facteurs de risque, que les modèles linéaires manqueraient.</li>
+                <li><strong>Modélisation Avancée :</strong> J'ai entraîné trois modèles de régression (Random Forest, XGBoost, Gradient Boosting) et utilisé <code>GridSearchCV</code> pour l'optimisation des hyperparamètres. Pour gérer les caractéristiques des données, j'ai appliqué une <strong>transformation logarithmique</strong> à la variable cible et utilisé une <strong>pondération des échantillons</strong> pour garantir que le modèle accorde de l'attention aux sinistres de grande valeur (mais rares).</li>
+                <li><strong>Évaluation Rigoureuse :</strong> Je suis allé au-delà des mesures de précision standard, en analysant les graphiques de résidus pour diagnostiquer les faiblesses du modèle, telles que sa tendance à sous-estimer les sinistres coûteux.</li>
+            </ol>
+        </div>
+
+        <!-- 6. Key Visualizations & Results -->
+        <div class="card">
+            <h2><i class="fas fa-chart-bar icon" style="color: #e67e22;padding-right: 10px"></i>Visualisations Clés et Résultats</h2>
+            <p>L'analyse a produit plusieurs visualisations clés qui racontent une histoire claire sur les moteurs des coûts d'assurance.</p>
+            <div class="img-container" style="margin-bottom: 20px;">
+                <img src="images/insurance_charges_analysis_39_0.png" alt="Facteurs de risque cumulatifs">
+                <figcaption><strong>Aperçu :</strong> Les facteurs de risque se cumulent. Les frais augmentent de façon spectaculaire lorsque l'âge et l'IMC élevés sont combinés au tabagisme. <br><strong>Pertinence Commerciale :</strong> Cela prouve que le risque n'est pas linéaire et que les modèles de tarification doivent tenir compte de ces interactions.</figcaption>
+            </div>
+            <div class="grid-container">
+                <div class="img-container">
+                    <img src="images/insurance_charges_analysis_24_1.png" alt="Frais moyens par statut de fumeur">
+                    <figcaption><strong>Aperçu :</strong> Les frais moyens des fumeurs sont près de 4 fois plus élevés que ceux des non-fumeurs. <br><strong>Pertinence Commerciale :</strong> Le statut de fumeur est un facteur non négociable et de premier ordre pour le calcul des primes.</figcaption>
+                </div>
+                <div class="img-container">
+                    <img src="images/insurance_charges_analysis_77_0.png" alt="Importance des fonctionnalités">
+                    <figcaption><strong>Aperçu :</strong> Le modèle a confirmé que le tabagisme, l'IMC et l'âge sont les 3 principaux prédicteurs. <br><strong>Pertinence Commerciale :</strong> Valide que la souscription doit se concentrer sur ces facteurs de santé et démographiques fondamentaux.</figcaption>
+                </div>
+            </div>
+            <div class="img-container" style="margin-top: 20px;">
+                <img src="images/insurance_charges_analysis_80_0.png" alt="Frais réels vs prévus">
+                <figcaption><strong>Aperçu :</strong> Le modèle est très précis pour les frais de faible à moyenne gamme mais sous-estime les sinistres coûteux. <br><strong>Pertinence Commerciale :</strong> Cela identifie une faiblesse spécifique qui doit être gérée, suggérant une approche hybride où les polices de grande valeur font l'objet d'un examen manuel.</figcaption>
+            </div>
+            
+            <h3 style="margin-top: 40px;"><i class="fab fa-power-bi icon" style="color: #f2c811;padding-right: 10px"></i>Tableau de Bord Interactif Power BI</h3>
+            <p>Pour une exploration plus approfondie et interactive des données, veuillez consulter le rapport Power BI intégré ci-dessous.</p>
+            <div class="powerbi-container">
+                <iframe title="Analyse des Frais d'Assurance" src="https://app.powerbi.com/view?r=eyJrIjoiYWRiMjcyODQtOThiNi00NjdmLTg0MjAtMjA2ZGE3YjE0NGRmIiwidCI6IjhjY2M5ZDBkLTA3YmMtNDZlNS05NDg3LTUzNWFiYWY4N2ViMSJ9" frameborder="0" allowFullScreen="true"></iframe>
+            </div>
+        </div>
+
+        <!-- 7. Root Cause Analysis -->
+        <div class="card">
+            <h2><i class="fas fa-search icon" style="color: #7f8c8d;padding-right: 10px"></i>Analyse des Causes Profondes</h2>
+            <p>Les principales conclusions peuvent être retracées à des scénarios réels clairs :</p>
+            <ul>
+                <li><strong>Pourquoi les fumeurs coûtent-ils beaucoup plus cher ?</strong> Le tabagisme est lié à un large éventail de problèmes de santé chroniques et coûteux, du cancer aux maladies cardiaques. Cela augmente considérablement la probabilité de sinistres d'assurance importants.</li>
+                <li><strong>Pourquoi le modèle sous-estime-t-il les sinistres coûteux ?</strong> Ces sinistres sont rares dans l'ensemble de données. Le modèle, optimisé pour être précis pour la majorité des cas, dispose de données insuffisantes pour apprendre les schémas complexes des événements de santé les plus extrêmes et les plus coûteux. Il s'agit d'une limitation des données, et non d'un simple échec du modèle.</li>
+                <li><strong>Pourquoi l'âge et l'IMC ont-ils un effet cumulatif ?</strong> À mesure que les gens vieillissent, leur état de santé de base décline naturellement. Lorsqu'il est combiné à l'obésité (IMC élevé), le risque de développer plusieurs maladies chroniques (co-morbidités) augmente de façon exponentielle, entraînant une utilisation beaucoup plus élevée des soins de santé.</li>
+            </ul>
+        </div>
+
+        <!-- 8. Business Recommendations -->
+        <div class="card">
+            <h2><i class="fas fa-lightbulb icon" style="color: #f1c40f;padding-right: 10px"></i>Recommandations Commerciales</h2>
+            <div class="recommendations">
+                <div class="rec-card">
+                    <h3><i class="fas fa-cogs icon" style="color: #f39c12;padding-right: 10px"></i>1. Mettre en œuvre un Modèle de Tarification Hybride</h3>
+                    <p>Utilisez le modèle pour des devis automatisés en temps réel sur les polices standard (prévues à moins de 20 000 $) mais signalez les prévisions de grande valeur pour un examen obligatoire par un souscripteur humain. Cela équilibre la vitesse et la précision.</p>
+                </div>
+                <div class="rec-card">
+                    <h3><i class="fas fa-layer-group icon" style="color: #2980b9;padding-right: 10px"></i>2. Développer un Cadre de Risque à Plusieurs Niveaux</h3>
+                    <p>Créez des parcours de souscription distincts. Les profils à faible risque peuvent être accélérés, tandis que les profils à haut risque (par exemple, les fumeurs plus âgés avec un IMC élevé) déclenchent un processus d'examen plus approfondi et dirigé par des experts.</p>
+                </div>
+                <div class="rec-card">
+                    <h3><i class="fas fa-dollar-sign icon" style="color: #27ae60;padding-right: 10px"></i>3. Introduire une Prime de Risque Dynamique</h3>
+                    <p>Pour les polices dont la prévision se situe dans la fourchette supérieure, ajoutez automatiquement une marge de risque calculée à la prime. Cela atténue de manière proactive le risque financier lié à la tendance connue du modèle à sous-estimer ces cas.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. Estimated Business Impact -->
+        <div class="card">
+            <h2><i class="fas fa-chart-pie icon" style="color: #d35400;padding-right: 10px"></i>Impact Commercial Estimé</h2>
+            <p>La mise en œuvre de ces recommandations pourrait générer des avantages financiers et opérationnels importants :</p>
+            <ul>
+                <li><strong>Économies de Coûts :</strong> En ajoutant une prime de risque aux 10 % supérieurs des polices, l'entreprise pourrait atténuer des pertes annuelles estimées à plus de <strong>250 000 $</strong> dues à la sous-tarification.</li>
+                <li><strong>Efficacité Opérationnelle :</strong> L'automatisation des devis pour 80 % des demandeurs pourrait réduire le temps de traitement de la souscription d'environ <strong>~60 %</strong>, libérant ainsi des souscripteurs experts pour se concentrer sur les cas complexes et de grande valeur où leur expertise est la plus nécessaire.</li>
+                <li><strong>Amélioration de la Rentabilité :</strong> Une stratégie de tarification plus précise et alignée sur le risque devrait améliorer la rentabilité globale du portefeuille d'assurance de <strong>2 à 3 %</strong>.</li>
+            </ul>
+        </div>
+
+        <!-- 10. Challenges & Solutions -->
+        <div class="card">
+            <h2><i class="fas fa-exclamation-triangle icon" style="color: #c0392b;padding-right: 10px"></i>Défis et Solutions</h2>
+            <ul>
+                <li><strong>Défi :</strong> La variable cible (<code>charges</code>) était très asymétrique, violant les hypothèses de la régression. <br><strong>Solution :</strong> J'ai appliqué une transformation <code>log1p</code> pour normaliser la distribution, ce qui a stabilisé le modèle et amélioré sa puissance prédictive.</li>
+                <li><strong>Défi :</strong> Le modèle ignorait initialement les sinistres coûteux, rares mais critiques. <br><strong>Solution :</strong> J'ai mis en œuvre <code>sample_weight</code> lors de l'entraînement, forçant le modèle à accorder plus d'attention à ces points de données de grande valeur et réduisant le biais de sous-prédiction.</li>
+            </ul>
+        </div>
+
+        <!-- 11. Key Learnings & Insights -->
+        <div class="card">
+            <h2><i class="fas fa-book-open icon" style="color: #8e44ad;padding-right: 10px"></i>Principaux Apprentissages et Aperçus</h2>
+            <ul>
+                <li><strong>Du Code au Contexte :</strong> Ce projet a consolidé ma capacité à traduire la performance statistique d'un modèle en un récit sur le risque et l'opportunité commerciale.</li>
+                <li><strong>La Valeur des Diagnostics :</strong> J'ai appris que les mesures de précision de haut niveau ne suffisent pas. Une analyse approfondie des graphiques de résidus et des erreurs est essentielle pour comprendre les limites réelles d'un modèle et élaborer des stratégies de mise en œuvre sûres.</li>
+                <li><strong>Ingénierie des Fonctionnalités Axée sur le Domaine :</strong> La création de fonctionnalités comme <code>age_to_bmi</code> m'a appris l'importance d'utiliser les connaissances du domaine pour représenter des relations complexes et non linéaires dans les données.</li>
+            </ul>
+        </div>
+
+        <!-- 12. Future Enhancements -->
+        <div class="card">
+            <h2><i class="fas fa-arrow-alt-circle-up icon" style="color: #16a085;padding-right: 10px"></i>Améliorations Futures</h2>
+            <ul>
+                <li><strong>Acquérir Plus de Données :</strong> La prochaine étape la plus percutante serait de recueillir plus de données sur les sinistres coûteux pour traiter directement la principale faiblesse du modèle.</li>
+                <li><strong>Déployer en tant qu'API :</strong> Envelopper le modèle dans une application Flask ou FastAPI pour servir des prédictions en temps réel et l'intégrer dans un flux de travail de production.</li>
+                <li><strong>Construire un Modèle de Segmentation :</strong> Développer un modèle de classification distinct pour prédire d'abord si un client est à "haut risque" avant d'appliquer le modèle de régression, créant ainsi un processus en deux étapes plus robuste.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

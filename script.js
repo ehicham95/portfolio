@@ -4,15 +4,13 @@ let currentLang = 'en'; // Default language
 
 document.addEventListener('DOMContentLoaded', function() {
     const projectsContainer = document.getElementById('projectsContainer');
-    const selectedFlag = document.getElementById('selectedFlag');
-    const alternativeFlag = document.querySelector('.alternative-flag');
     const modal = document.getElementById('projectModal');
     const closeButton = document.querySelector('.close');
 
     // Fetch all necessary data
     Promise.all([
         fetch('translations.json').then(response => response.json()),
-        fetch('projects.json').then(response => response.json())
+        fetchProjects()
     ])
     .then(([translationsData, projects]) => {
         translations = translationsData;
@@ -25,98 +23,120 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .catch(error => console.error('Error loading data:', error));
 
-    function openModal(projectId) {
+    async function fetchProjects() {
+        const projectFolders = ['insurance_regression_analysis'];
+        const projects = [];
+
+        for (const folder of projectFolders) {
+            const analysisLang = currentLang === 'fr' ? 'analysis_fr.html' : 'analysis.html';
+            const response = await fetch(`projects/${folder}/${analysisLang}`);
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            const title = doc.querySelector('h1').textContent;
+            const description = doc.querySelector('.card p').textContent;
+            const tags = Array.from(doc.querySelectorAll('.tech-badge')).map(badge => badge.textContent);
+            const githubLink = "https://github.com/ehicham95/Insurance_Charges_Analysis";
+
+            // Fix image paths
+            const images = doc.querySelectorAll('img');
+            images.forEach(img => {
+                const src = img.getAttribute('src');
+                if (src && !src.startsWith('http')) {
+                    img.setAttribute('src', `projects/${folder}/${src}`);
+                }
+            });
+
+            projects.push({
+                id: folder,
+                title: title,
+                description: description,
+                tags: tags,
+                html: doc.querySelector('.container').innerHTML,
+                githubLink: githubLink
+            });
+        }
+        return projects;
+    }
+
+    async function openModal(projectId) {
         const project = projectsData.find(p => p.id === projectId);
-        if (project && project[currentLang]) {
-            const projectLangData = project[currentLang];
+        if (project) {
+            const analysisLang = currentLang === 'fr' ? 'analysis_fr.html' : 'analysis.html';
+            const response = await fetch(`projects/${project.id}/${analysisLang}`);
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
 
-            document.getElementById('modalProjectTitle').textContent = projectLangData.title;
-            document.getElementById('modalProblemStatement').textContent = projectLangData.problemStatement;
-            document.getElementById('modalDataSources').textContent = projectLangData.dataSources;
-            document.getElementById('modalMethodology').textContent = projectLangData.methodology;
-            document.getElementById('modalResults').textContent = projectLangData.results;
-            document.getElementById('modalChallenges').textContent = projectLangData.challenges;
-            document.getElementById('modalLearnings').textContent = projectLangData.learnings;
-            document.getElementById('modalRootCauseAnalysis').textContent = projectLangData.rootCauseAnalysis;
-            document.getElementById('modalBusinessRecommendations').innerHTML = projectLangData.businessRecommendations;
-            document.getElementById('modalEstimatedBusinessImpact').textContent = projectLangData.estimatedBusinessImpact;
+            // Fix image paths
+            const images = doc.querySelectorAll('img');
+            images.forEach(img => {
+                const src = img.getAttribute('src');
+                if (src && !src.startsWith('http')) {
+                    img.setAttribute('src', `projects/${project.id}/${src}`);
+                }
+            });
 
-            const visualizationsContainer = document.getElementById('modalVisualizations');
-            visualizationsContainer.innerHTML = '';
-            if (project.visualizations && project.visualizations.length > 0) {
-                document.getElementById('modalVisualizationsContainer').style.display = 'block';
-                project.visualizations.forEach(visUrl => {
-                    const img = document.createElement('img');
-                    img.src = visUrl;
-                    img.alt = "Project Visualization";
-                    visualizationsContainer.appendChild(img);
-                });
-            } else {
-                document.getElementById('modalVisualizationsContainer').style.display = 'none';
-            }
-
-            const powerBiContainer = document.getElementById('modalPowerBiContainer');
-            const powerBiFrame = document.getElementById('powerBiFrame');
-            if (project.powerBiEmbedUrl) {
-                powerBiContainer.style.display = 'block';
-                powerBiFrame.src = project.powerBiEmbedUrl;
-            } else {
-                powerBiContainer.style.display = 'none';
-            }
-
+            document.getElementById('modalProjectTitle').textContent = doc.querySelector('h1').textContent;
+            document.getElementById('modalProjectDetails').innerHTML = doc.querySelector('.container').innerHTML;
             modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
     }
 
     function populateProjects() {
         projectsContainer.innerHTML = '';
         projectsData.forEach(project => {
-            if (project[currentLang]) {
-                const projectLangData = project[currentLang];
-                const projectCard = document.createElement('div');
-                projectCard.className = 'project-card';
-                projectCard.setAttribute('data-project-id', project.id);
+            const projectCard = document.createElement('div');
+            projectCard.className = 'project-card';
+            projectCard.setAttribute('data-project-id', project.id);
 
-                const projectTitle = document.createElement('h3');
-                projectTitle.textContent = projectLangData.title;
+            const projectImage = document.createElement('img');
+            projectImage.src = `projects/${project.id}/project_image.png`;
+            projectImage.alt = project.title;
+            projectImage.className = 'project-image';
+            projectCard.appendChild(projectImage);
 
-                const projectDescription = document.createElement('p');
-                projectDescription.textContent = projectLangData.description;
+            const projectTitle = document.createElement('h3');
+            projectTitle.textContent = project.title;
 
-                const projectSkillsContainer = document.createElement('div');
-                projectSkillsContainer.className = 'project-skills';
-                project.tags.forEach(tag => {
-                    const tagElement = document.createElement('span');
-                    tagElement.className = 'project-tag';
-                    tagElement.textContent = tag;
-                    projectSkillsContainer.appendChild(tagElement);
-                });
+            const projectDescription = document.createElement('p');
+            projectDescription.textContent = project.description;
 
-                const projectLinksContainer = document.createElement('div');
-                projectLinksContainer.className = 'project-links';
+            const projectSkillsContainer = document.createElement('div');
+            projectSkillsContainer.className = 'project-skills';
+            project.tags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'project-tag';
+                tagElement.textContent = tag;
+                projectSkillsContainer.appendChild(tagElement);
+            });
 
-                const seeDetailsButton = document.createElement('button');
-                seeDetailsButton.className = 'see-details-btn project-link';
-                seeDetailsButton.setAttribute('data-translate-key', 'seeDetails');
-                seeDetailsButton.textContent = translations[currentLang].seeDetails;
-                seeDetailsButton.addEventListener('click', () => openModal(project.id));
-                projectLinksContainer.appendChild(seeDetailsButton);
+            const projectLinksContainer = document.createElement('div');
+            projectLinksContainer.className = 'project-links';
 
-                if (project.githubLink) {
-                    const githubLink = document.createElement('a');
-                    githubLink.href = project.githubLink;
-                    githubLink.className = 'project-link github-link';
-                    githubLink.target = '_blank';
-                    githubLink.innerHTML = `<i class="fab fa-github"></i> <span data-translate-key="githubPage">${translations[currentLang].githubPage}</span>`;
-                    projectLinksContainer.appendChild(githubLink);
-                }
+            const seeDetailsButton = document.createElement('button');
+            seeDetailsButton.className = 'see-details-btn project-link';
+            seeDetailsButton.setAttribute('data-translate-key', 'seeDetails');
+            seeDetailsButton.textContent = translations[currentLang]?.seeDetails || 'See Details';
+            seeDetailsButton.addEventListener('click', () => openModal(project.id));
+            projectLinksContainer.appendChild(seeDetailsButton);
 
-                projectCard.appendChild(projectTitle);
-                projectCard.appendChild(projectDescription);
-                projectCard.appendChild(projectSkillsContainer);
-                projectCard.appendChild(projectLinksContainer);
-                projectsContainer.appendChild(projectCard);
+            if (project.githubLink) {
+                const githubLink = document.createElement('a');
+                githubLink.href = project.githubLink;
+                githubLink.className = 'project-link github-link';
+                githubLink.target = '_blank';
+                githubLink.innerHTML = `<i class="fab fa-github"></i> <span data-translate-key="githubPage">${translations[currentLang]?.githubPage || 'GitHub'}</span>`;
+                projectLinksContainer.appendChild(githubLink);
             }
+
+            projectCard.appendChild(projectTitle);
+            projectCard.appendChild(projectDescription);
+            projectCard.appendChild(projectSkillsContainer);
+            projectCard.appendChild(projectLinksContainer);
+            projectsContainer.appendChild(projectCard);
         });
     }
 
@@ -124,7 +144,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const skillsContainer = document.getElementById('skillsContainer');
         skillsContainer.innerHTML = ''; // Clear existing skills
 
-        const skillsData = translations[currentLang].skills;
+        const skillsData = translations[currentLang]?.skills;
+        if (!skillsData) return;
 
         for (const categoryKey in skillsData) {
             const category = skillsData[categoryKey];
@@ -185,12 +206,13 @@ document.addEventListener('DOMContentLoaded', function() {
         populateSkills();
     }
 
-    window.switchLanguage = function() {
+    window.switchLanguage = async function() {
         currentLang = currentLang === 'en' ? 'fr' : 'en';
         const newFlag = currentLang === 'en' ? 'https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png' : 'https://cdn.countryflags.com/thumbs/france/flag-400.png';
         const newAltFlag = currentLang === 'en' ? 'https://cdn.countryflags.com/thumbs/france/flag-400.png' : 'https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png';
-        selectedFlag.src = newFlag;
-        alternativeFlag.src = newAltFlag;
+        document.getElementById('selectedFlag').src = newFlag;
+        document.querySelector('.alternative-flag').src = newAltFlag;
+        projectsData = await fetchProjects();
         updateTextContent();
     };
 
@@ -230,10 +252,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', highlightActiveNavLink);
 
-    closeButton.addEventListener('click', () => modal.style.display = 'none');
+    closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
     window.addEventListener('click', (event) => {
         if (event.target === modal) {
             modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
     });
 
