@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .catch(error => console.error('Error loading data:', error));
 
     async function fetchProjects() {
-        const projectFolders = ['insurance_regression_analysis'];
+        const projectFolders = ['insurance_regression_analysis', 'credit_loan_default', 'credit_card_user_behavior_segmentation'];
         const projects = [];
 
         for (const folder of projectFolders) {
@@ -37,7 +37,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const title = doc.querySelector('h1').textContent;
             const description = doc.querySelector('.card p').textContent;
             const tags = Array.from(doc.querySelectorAll('.tech-badge')).map(badge => badge.textContent);
-            const githubLink = "https://github.com/ehicham95/Insurance_Charges_Analysis";
+            
+            // Set GitHub link based on project folder
+            let githubLink = "";
+            if (folder === 'insurance_regression_analysis') {
+                githubLink = "https://github.com/ehicham95/Insurance_Charges_Analysis";
+            } else if (folder === 'credit_loan_default') {
+                githubLink = "https://github.com/ehicham95/Credit_Loan_Default_Prediction";
+            } else if (folder === 'credit_card_user_behavior_segmentation') {
+                githubLink = "https://github.com/ehicham95/Credit_Card_User_Behavior_Segmentation";
+            }
 
             // Fix image paths
             const images = doc.querySelectorAll('img');
@@ -80,6 +89,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             document.getElementById('modalProjectTitle').textContent = doc.querySelector('h1').textContent;
             document.getElementById('modalProjectDetails').innerHTML = doc.querySelector('.container').innerHTML;
+            
+            // Initialize image zoom functionality for loaded content
+            setTimeout(function() {
+                initializeImageZoomInModal();
+            }, 100);
+            
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
@@ -200,6 +215,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 aboutTextContainer.appendChild(p);
             }
         }
+
+        // Update resume link based on language
+        const resumeLink = document.getElementById('resumeLink');
+        if (resumeLink) {
+            const resumeFile = currentLang === 'fr' ? 'resume/Hicham EL HADRACHI_FR.pdf' : 'resume/Hicham EL HADRACHI_EN.pdf';
+            resumeLink.href = resumeFile;
+        }
         
         // Re-populate projects and skills to update their text content
         populateProjects();
@@ -278,5 +300,63 @@ document.addEventListener('DOMContentLoaded', function() {
     sectionsToFade.forEach(section => {
         section.classList.add('fade-in-section');
         observer.observe(section);
+    });
+
+    // Image zoom functionality for modal content
+    function initializeImageZoomInModal() {
+        const modalDetails = document.getElementById('modalProjectDetails');
+        if (!modalDetails) return;
+
+        // Create image zoom modal if it doesn't exist
+        let imageZoomModal = document.getElementById('imageZoomModal');
+        if (!imageZoomModal) {
+            imageZoomModal = document.createElement('div');
+            imageZoomModal.id = 'imageZoomModal';
+            imageZoomModal.className = 'modal';
+            imageZoomModal.style.zIndex = '2000';
+            imageZoomModal.innerHTML = `
+                <span class="close" id="imageZoomClose">&times;</span>
+                <img class="modal-content" id="zoomedImage">
+                <div class="modal-caption" id="zoomedCaption"></div>
+            `;
+            document.body.appendChild(imageZoomModal);
+
+            // Add event listeners for the zoom modal
+            document.getElementById('imageZoomClose').onclick = function() {
+                imageZoomModal.style.display = 'none';
+            };
+
+            imageZoomModal.onclick = function(event) {
+                if (event.target === imageZoomModal) {
+                    imageZoomModal.style.display = 'none';
+                }
+            };
+        }
+
+        // Add click handlers to zoomable images in modal
+        const zoomableImages = modalDetails.querySelectorAll('.zoomable-img, img[data-zoom="true"]');
+        zoomableImages.forEach(img => {
+            img.style.cursor = 'zoom-in';
+            img.onclick = function() {
+                const zoomedImg = document.getElementById('zoomedImage');
+                const zoomedCaption = document.getElementById('zoomedCaption');
+                
+                if (zoomedImg && zoomedCaption) {
+                    imageZoomModal.style.display = 'block';
+                    zoomedImg.src = this.src;
+                    zoomedCaption.innerHTML = this.alt;
+                }
+            };
+        });
+    }
+
+    // Close image zoom modal with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const imageZoomModal = document.getElementById('imageZoomModal');
+            if (imageZoomModal && imageZoomModal.style.display === 'block') {
+                imageZoomModal.style.display = 'none';
+            }
+        }
     });
 });

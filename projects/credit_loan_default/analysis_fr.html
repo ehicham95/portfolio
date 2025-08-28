@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse des Défauts de Prêt | Comprendre le Comportement des Emprunteurs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: #fff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        h1, h2, h3 {
+            font-family: 'Roboto', sans-serif;
+            color: #1a3b5d;
+            margin-top: 0;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #4a90e2;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.8em;
+            color: #4a90e2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        h3 {
+            font-size: 1.4em;
+            color: #1a3b5d;
+        }
+        .card {
+            background: #ffffff;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .highlight-box {
+            background-color: #eaf2fa;
+            border-left: 5px solid #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .highlight-box p { margin: 0; }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tech-badge {
+            background-color: #e0e6ed;
+            color: #1a3b5d;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .img-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.07);
+            display: inline-block;
+            max-width: 100%;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .img-container figcaption {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #555;
+            font-style: italic;
+        }
+        .recommendations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .rec-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e6ed;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .rec-card h3 { margin-top: 0; font-size: 1.2em; }
+        .powerbi-container {
+            width: 100%;
+            height: 600px;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .powerbi-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .icon {
+            padding-right: 10px;
+        }
+
+        code {
+            font-size: 0.95em;
+            background-color: #eef;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        
+        /* Additional styles for credit loan specific elements */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .metric-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e6ed;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .metric-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #1a3b5d;
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .visualization-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .viz-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e6ed;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .viz-card h4 {
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+        
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .recommendation-card, .business-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e6ed;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .recommendation-card h4, .business-card h4 {
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+        
+        .challenges-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .challenges-list li {
+            background: #f9f9f9;
+            margin: 10px 0;
+            padding: 15px;
+            border-left: 4px solid #4a90e2;
+            border-radius: 5px;
+        }
+        
+        .challenge-title {
+            font-weight: bold;
+            color: #1a3b5d;
+            margin-bottom: 5px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            margin-top: 2%;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+        
+        /* Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .metrics-grid,
+            .visualization-grid,
+            .recommendations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                max-width: 95%;
+                max-height: 85%;
+            }
+
+            .close {
+                font-size: 30px;
+                right: 20px;
+                top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-search icon" style="color: #e74c3c;padding-right: 10px"></i>Comprendre Pourquoi les Gens ne Remboursent pas Leurs Prêts</h1>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <p style="font-size: 1.2em; color: #7f8c8d; margin-bottom: 10px;">Analyse par Apprentissage Automatique du Comportement de Défaut des Emprunteurs</p>
+            <p style="font-weight: 500;"><strong>Investigation Analytique</strong> | Reconnaissance de Motifs • Analyse Comportementale • Insights Financiers</p>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <h2><i class="fas fa-bullseye icon" style="color: #3498db;padding-right: 10px"></i>Résumé Exécutif</h2>
+            <p>Cette analyse utilise l'apprentissage automatique pour décoder le mystère des défauts de prêt. Plutôt que de simplement prédire qui pourrait faire défaut, je me suis concentré sur la compréhension des <em>raisons</em> pour lesquelles les gens font défaut en découvrant les schémas sous-jacents dans les caractéristiques des emprunteurs, les situations financières, et les conditions de prêt qui mènent aux échecs de paiement. Les insights révèlent que les défauts suivent des schémas prévisibles qui peuvent aider les prêteurs à mieux comprendre les défis de leurs clients.</p>
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-clock icon" style="color: #e74c3c;padding-right: 10px"></i>Aperçu de 30 Secondes:</strong> Quels facteurs poussent les gens à faire défaut sur leurs prêts ? J'ai utilisé l'apprentissage automatique pour analyser 32 586 dossiers de prêt et découvrir les schémas comportementaux. J'ai appliqué des algorithmes ML avancés pour identifier les caractéristiques clés et circonstances qui mènent aux défauts de prêt. <strong>Découverte Clé:</strong> J'ai identifié 3 profils de risque distincts et 6 déclencheurs critiques de défaut, atteignant 73% de précision dans la détection des véritables défaillants avec 92,85% de précision.</p>
+            </div>
+        </div>
+
+        <!-- Technical Skills Showcase -->
+        <div class="card">
+            <h2><i class="fas fa-cogs icon" style="color: #f39c12;padding-right: 10px"></i>Vitrine des Compétences Techniques</h2>
+            <div class="tech-stack">
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">Machine Learning</span>
+                <span class="tech-badge">XGBoost</span>
+                <span class="tech-badge">LightGBM</span>
+                <span class="tech-badge">Random Forest</span>
+                <span class="tech-badge">Analyse SHAP</span>
+                <span class="tech-badge">Optuna</span>
+                <span class="tech-badge">Power BI</span>
+                <span class="tech-badge">Segmentation Client</span>
+                <span class="tech-badge">Déséquilibre de Classe</span>
+                <span class="tech-badge">Ingénierie des Caractéristiques</span>
+            </div>
+        </div>
+
+        <!-- The Central Question -->
+        <div class="card">
+            <h2><i class="fas fa-question-circle icon" style="color: #9b59b6;padding-right: 10px"></i>La Question Centrale</h2>
+            <h3>Ce que Nous Voulons Comprendre</h3>
+            <p>Quand quelqu'un contracte un prêt, il a l'intention de le rembourser. Alors que se passe-t-il entre l'approbation du prêt et le défaut ? Quelles circonstances, caractéristiques, ou décisions mènent les emprunteurs sur le chemin du non-paiement ? Cette analyse utilise l'apprentissage automatique pour découvrir les schémas cachés derrière les défauts de prêt.</p>
+            
+            <h3>Pourquoi C'est Important</h3>
+            <p>Comprendre le comportement de défaut va au-delà de l'identification des emprunteurs risqués. Cela nous aide à comprendre les facteurs humains et financiers qui créent des difficultés de paiement. En révélant ces schémas, nous pouvons mieux comprendre :</p>
+            <ul>
+                <li><strong>Indicateurs de Stress Financier:</strong> Quelles situations financières prédisent des problèmes à venir ?</li>
+                <li><strong>Caractéristiques des Emprunteurs:</strong> Quels attributs personnels corrèlent avec le risque de défaut ?</li>
+                <li><strong>Impact de la Structure du Prêt:</strong> Comment les conditions de prêt influencent-elles le comportement de paiement ?</li>
+                <li><strong>Signaux d'Alerte:</strong> Quels indicateurs précoces suggèrent un défaut potentiel ?</li>
+            </ul>
+        </div>
+
+        <!-- Data Overview -->
+        <div class="card">
+            <h2><i class="fas fa-database icon" style="color: #1abc9c;padding-right: 10px"></i>Sources de Données & Aperçu</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">32 586</div>
+                    <div class="metric-label">Dossiers de Prêt Totaux</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">13</div>
+                    <div class="metric-label">Caractéristiques Originales</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">898</div>
+                    <div class="metric-label">Valeurs Manquantes</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">25+</div>
+                    <div class="metric-label">Caractéristiques Créées</div>
+                </div>
+            </div>
+
+            <h3>Quelles Informations Nous Avons Analysées</h3>
+            <p><strong>Source:</strong> Jeu de données de prêts compréhensif avec profils d'emprunteurs et résultats de prêts</p>
+            <p><strong>Les Informations d'Emprunteur Incluent:</strong></p>
+            <ul>
+                <li><strong>Profil Personnel:</strong> Âge, niveau de revenu, historique d'emploi</li>
+                <li><strong>Caractéristiques du Prêt:</strong> Montant emprunté, taux d'intérêt, objectif du prêt, durée de remboursement</li>
+                <li><strong>Historique Financier:</strong> Expérience de crédit, défauts passés, durée de crédit</li>
+                <li><strong>Situation de Vie:</strong> Propriété immobilière, obligations de dette, indicateurs de stabilité financière</li>
+            </ul>
+
+            <div class="viz-card">
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: left; font-family: monospace; font-size: 0.85rem;">
+                    <strong>Aperçu du Jeu de Données:</strong><br>
+                    • <strong>Forme:</strong> 32 586 lignes × 13 colonnes<br>
+                    • <strong>Types de Données:</strong> 6 numériques, 7 catégorielles<br>
+                    • <strong>Valeurs Manquantes:</strong> 898 total (2,8%)<br>
+                    &nbsp;&nbsp;- employment_length: 895 manquantes<br>
+                    &nbsp;&nbsp;- customer_id: 3 manquantes<br>
+                    • <strong>Distribution de la Cible:</strong><br>
+                    &nbsp;&nbsp;- Pas de Défaut: 26 457 (81,2%)<br>
+                    &nbsp;&nbsp;- Défaut: 6 129 (18,8%)<br>
+                    • <strong>Utilisation Mémoire:</strong> 3,3 MB<br>
+                    • <strong>Score de Qualité:</strong> 97,2% de données complètes
+                </div>
+                <p><strong>Qualité des Données & Prétraitement:</strong> Jeu de données de haute qualité avec approche stratégique de nettoyage des données :</p>
+                <ul style="margin-top: 10px; font-size: 0.9rem;">
+                    <li><strong>Stratégie des Valeurs Manquantes:</strong> J'ai utilisé l'analyse statistique pour choisir la méthode d'imputation optimale - IterativeImputer sélectionné basé sur des comparaisons de performance avec l'imputation par moyenne, médiane, et mode</li>
+                    <li><strong>Détection des Valeurs Aberrantes:</strong> J'ai appliqué une analyse logique pour identifier et supprimer les valeurs extrêmes du jeu de données, en me concentrant sur des montants de prêt et niveaux de revenu irréalistes qui pourraient biaiser la performance du modèle</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Analysis Approach -->
+        <div class="card">
+            <h2><i class="fas fa-microscope icon" style="color: #34495e;padding-right: 10px"></i>Comment Nous Avons Découvert les Schémas</h2>
+            <h3>Processus d'Investigation par Apprentissage Automatique</h3>
+            <p>J'ai utilisé une <strong>approche d'apprentissage automatique</strong> complète conçue pour découvrir de véritables schémas comportementaux plutôt que juste du bruit statistique :</p>
+            
+            <div class="highlight-box">
+                <h3>Approche de Découverte de Schémas Basée sur les Données</h3>
+                <ul>
+                    <li><strong>Prétraitement Statistique des Données:</strong> J'ai mené une comparaison systématique des méthodes d'imputation (moyenne, médiane, mode, IterativeImputer) utilisant la validation croisée pour sélectionner la stratégie optimale des valeurs manquantes</li>
+                    <li><strong>Suppression Logique des Valeurs Aberrantes:</strong> J'ai appliqué des connaissances du domaine pour identifier et éliminer les valeurs extrêmes (ex: niveaux de revenu irréalistes >500K$, montants de prêt au-delà des gammes typiques) qui pourraient tromper la détection de schémas</li>
+                    <li><strong>Création de Signaux Comportementaux:</strong> J'ai construit 25+ caractéristiques ingénieurées pour capturer les schémas de comportement financier et les interactions de risque</li>
+                    <li><strong>Validation d'Algorithmes Multiples:</strong> J'ai utilisé Random Forest, XGBoost, et LightGBM pour valider croisément les découvertes de schémas</li>
+                    <li><strong>Prévention du Surapprentissage:</strong> J'ai appliqué le scoring F-beta (β=1,5) et l'apprentissage sensible au coût avec validation rigoureuse</li>
+                    <li><strong>Segmentation Client:</strong> J'ai identifié 3 clusters de risque distincts à travers le clustering ML non supervisé</li>
+                    <li><strong>Résultats Interprétables:</strong> J'ai utilisé l'analyse SHAP pour rendre les schémas complexes compréhensibles</li>
+                </ul>
+            </div>
+
+            <div class="tech-stack">
+                <div class="tech-badge">Python</div>
+                <div class="tech-badge">Scikit-learn</div>
+                <div class="tech-badge">XGBoost</div>
+                <div class="tech-badge">LightGBM</div>
+                <div class="tech-badge">Optuna</div>
+                <div class="tech-badge">SHAP</div>
+                <div class="tech-badge">Power BI</div>
+            </div>
+        </div>
+
+        <!-- Key Discoveries -->
+        <div class="card">
+            <h2><i class="fas fa-lightbulb icon" style="color: #f1c40f;padding-right: 10px"></i>Ce que Nous Avons Découvert sur le Comportement de Défaut</h2>
+            
+            <div class="visualization-grid">
+                <div class="viz-card">
+                    <img src="images/feature_importance.png" alt="Analyse d'Importance des Caractéristiques" style="width: 100%; height: 250px; object-fit: contain; border-radius: 8px; margin-bottom: 15px; cursor: zoom-in;" onclick="openImageModal(this)">
+                    <h4>Facteurs de Risque Critiques</h4>
+                    <p><strong>Top 6 Déclencheurs de Défaut:</strong> Grade de prêt, ratio dette-revenu, propriété immobilière, niveau de revenu, couverture d'intérêt, durée d'emploi</p>
+                </div>
+
+                <div class="viz-card">
+                    <img src="images/customer_clusters.png" alt="Résultats de Segmentation Client" style="width: 100%; height: 250px; object-fit: contain; border-radius: 8px; margin-bottom: 15px; cursor: zoom-in;" onclick="openImageModal(this)">
+                    <h4>3 Profils de Risque Distincts</h4>
+                    <p><strong>Haut-Risque:</strong> 47,3% taux de défaut (14,7% des clients)<br><strong>Risque-Moyen:</strong> 22,9% taux de défaut (12,9%)<br><strong>Bas-Risque:</strong> 14,7% taux de défaut (43,7%)</p>
+                </div>
+
+                <div class="viz-card">
+                    <img src="images/categorical_distribution.png" alt="Schémas de Profil d'Emprunteur" style="width: 100%; height: 250px; object-fit: contain; border-radius: 8px; margin-bottom: 15px; cursor: zoom-in;" onclick="openImageModal(this)">
+                    <h4>Schémas de Profil d'Emprunteur</h4>
+                    <p><strong>Insight Clé:</strong> Différences claires dans les caractéristiques entre défaillants et non-défaillants à travers la propriété immobilière, l'objectif du prêt, et les schémas d'emploi</p>
+                </div>
+
+                <div class="viz-card">
+                    <img src="images/debt_to_income.png" alt="Analyse Dette-Revenu" style="width: 100%; height: 250px; object-fit: contain; border-radius: 8px; margin-bottom: 15px; cursor: zoom-in;" onclick="openImageModal(this)">
+                    <h4>Impact Dette-Revenu</h4>
+                    <p><strong>Découverte Clé:</strong> Des ratios dette-revenu plus élevés augmentent dramatiquement la probabilité de défaut, montrant des seuils d'abordabilité clairs</p>
+                </div>
+
+                <div class="viz-card">
+                    <img src="images/shap_value_avg_impact.png" alt="Analyse d'Impact des Caractéristiques SHAP" style="width: 100%; height: 250px; object-fit: contain; border-radius: 8px; margin-bottom: 15px; cursor: zoom-in;" onclick="openImageModal(this)">
+                    <h4>Ce qui Pilote les Décisions ML</h4>
+                    <p><strong>Analyse SHAP:</strong> Montre exactement comment chaque facteur influence la prédiction du modèle du risque de défaut, révélant les caractéristiques les plus impactantes</p>
+                </div>
+
+                <div class="viz-card">
+                    <img src="images/scatter_plot.png" alt="Matrice de Nuage de Points des Relations de Caractéristiques" style="width: 100%; height: 250px; object-fit: contain; border-radius: 8px; margin-bottom: 15px; cursor: zoom-in;" onclick="openImageModal(this)">
+                    <h4>Schémas de Relation des Caractéristiques</h4>
+                    <p><strong>Matrice de Corrélation:</strong> Matrice complète de nuage de points révélant comment différentes caractéristiques d'emprunteur interagissent et se regroupent, avec séparation claire entre défaillants (orange) et non-défaillants (bleu)</p>
+                </div>
+
+                <div class="viz-card">
+                    <h4>Analyse Compromis Précision vs Rappel</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                        <div style="text-align: center;">
+                            <img src="images/80_recall_threshold.png" alt="Analyse Seuil 80% Rappel" style="width: 100%; height: 200px; object-fit: contain; border-radius: 8px; cursor: zoom-in;" onclick="openImageModal(this)">
+                            <small style="color: #666; margin-top: 5px; display: block;"><strong>Scénario 80% Rappel</strong><br>Seuil = 0,23, Précision ≈ 78%</small>
+                        </div>
+                        <div style="text-align: center;">
+                            <img src="images/90_recall_threshold.png" alt="Analyse Seuil 90% Rappel" style="width: 100%; height: 200px; object-fit: contain; border-radius: 8px; cursor: zoom-in;" onclick="openImageModal(this)">
+                            <small style="color: #666; margin-top: 5px; display: block;"><strong>Scénario 90% Rappel</strong><br>Seuil = 0,10, Précision ≈ 50%</small>
+                        </div>
+                    </div>
+                    <p><strong>Décision Business Critique:</strong> La comparaison montre le coût dramatique en précision d'un rappel plus élevé. Attraper 90% vs 80% des défaillants réduit la précision de 78% à 50%, signifiant significativement plus de faux positifs (bons clients incorrectement marqués comme risqués).</p>
+                </div>
+            </div>
+
+            <!-- Power BI Dashboard -->
+            <h3>Tableau de Bord EDA</h3>
+            <div class="powerbi-container">
+                <iframe title="credit_loan_defaulters-v3" width="100%" height="500" src="https://app.powerbi.com/view?r=eyJrIjoiNjRjMzQ2ZjktMjU2MS00YWMwLTgxYWYtZDc1MDZkMzRmMGM4IiwidCI6IjhjY2M5ZDBkLTA3YmMtNDZlNS05NDg3LTUzNWFiYWY4N2ViMSJ9" frameborder="0" allowFullScreen="true" style="border-radius: 8px;"></iframe>
+                <p style="margin-top: 15px;"><strong>Fonctionnalités du Tableau de Bord:</strong> Segmentation des risques clients, analyse des déclencheurs de défaut, surveillance du portefeuille, et capacités de scoring de risque en temps réel. Cliquez et interagissez avec les visualisations ci-dessus pour explorer différents aspects des schémas de défaut de prêt.</p>
+            </div>
+        </div>
+
+        <!-- Why People Default -->
+        <div class="card">
+            <h2><i class="fas fa-user-times icon" style="color: #e74c3c;padding-right: 10px"></i>Pourquoi les Gens Arrêtent de Payer Leurs Prêts</h2>
+            
+            <div class="highlight-box">
+                <h3>Les 6 Plus Gros Déclencheurs de Défaut (De l'Analyse ML)</h3>
+                <ul>
+                    <li><strong>1. Grade de Crédit Pauvre (D/E):</strong> Prédicteur le plus puissant - indique des luttes financières passées</li>
+                    <li><strong>2. Ratio Dette-Revenu Élevé (>25%):</strong> Pilote 20% des décisions du modèle - crise d'abordabilité</li>
+                    <li><strong>3. Logement Locatif:</strong> 35% de risque de défaut plus élevé - indique instabilité financière</li>
+                    <li><strong>4. Niveau de Revenu Bas:</strong> Contrainte de capacité de remboursement fondamentale</li>
+                    <li><strong>5. Couverture d'Intérêt Pauvre:</strong> Incapacité à assurer les paiements de dette</li>
+                    <li><strong>6. Instabilité d'Emploi (0-5 ans):</strong> Incertitude d'emploi affecte la fiabilité de paiement</li>
+                </ul>
+            </div>
+
+            <h3>Segments de Risque Client Découverts</h3>
+            <div class="recommendations-grid">
+                <div class="recommendation-card">
+                    <h4>Cluster Haut-Risque (14,7% des clients)</h4>
+                    <p><strong>Taux de Défaut:</strong> 47,3% - presque 1 sur 2 fait défaut</p>
+                    <p><strong>Profil:</strong> Grades de crédit pauvres, ratio dette-revenu élevé, locataires, prêts de consolidation de dettes</p>
+                    <p><strong>Action Nécessaire:</strong> Intervention immédiate requise</p>
+                </div>
+
+                <div class="business-card">
+                    <h4>Cluster Risque-Moyen (12,9% des clients)</h4>
+                    <p><strong>Taux de Défaut:</strong> 22,9% - nécessite surveillance</p>
+                    <p><strong>Profil:</strong> Caractéristiques mixtes, facteurs de risque modérés</p>
+                    <p><strong>Action Nécessaire:</strong> Due diligence renforcée</p>
+                </div>
+
+                <div class="business-card">
+                    <h4>Cluster Bas-Risque (43,7% des clients)</h4>
+                    <p><strong>Taux de Défaut:</strong> 14,7% - segment le plus profitable</p>
+                    <p><strong>Profil:</strong> Bon crédit, propriétaires, emploi stable, prêts éducation</p>
+                    <p><strong>Action Nécessaire:</strong> Éligible approbation rapide</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Root Cause Analysis -->
+        <div class="card">
+            <h2><i class="fas fa-search icon" style="color: #7f8c8d;padding-right: 10px"></i>Analyse des Causes Racines</h2>
+            <p>Les découvertes clés de notre analyse d'apprentissage automatique peuvent être retracées à des comportements et circonstances financiers du monde réel clairs :</p>
+            <ul>
+                <li><strong>Pourquoi les grades de crédit pauvres (D/E) prédisent-ils si fortement les défauts ?</strong> Ces grades reflètent des luttes financières passées et des difficultés de paiement. Les emprunteurs avec ces grades ont déjà démontré des défis dans la gestion des obligations de dette, rendant les défauts futurs plus probables.</li>
+                <li><strong>Pourquoi un ratio dette-revenu élevé (>25%) pilote-t-il les défauts ?</strong> Quand les paiements de dette consomment plus d'un quart du revenu, les emprunteurs ont peu de coussin financier pour les dépenses inattendues ou les perturbations de revenu, menant aux échecs de paiement.</li>
+                <li><strong>Pourquoi les locataires sont-ils 35% plus susceptibles de faire défaut ?</strong> La location indique souvent une valeur nette plus faible et une stabilité financière comparée à la propriété. Les locataires peuvent faire face à une instabilité de logement qui peut perturber leur capacité à maintenir des paiements de prêt constants.</li>
+                <li><strong>Pourquoi l'instabilité d'emploi (0-5 ans) augmente-t-elle le risque de défaut ?</strong> L'incertitude d'emploi impacte directement la fiabilité du revenu. Les emprunteurs avec un historique d'emploi instable sont plus vulnérables aux chocs de revenu qui peuvent déclencher des défauts.</li>
+            </ul>
+        </div>
+
+        <!-- Business Recommendations -->
+        <div class="card">
+            <h2><i class="fas fa-rocket icon" style="color: #2ecc71;padding-right: 10px"></i>Recommandations Business Actionnables</h2>
+            <p style="margin-bottom: 25px; font-style: italic;">Basé sur l'analyse de 32 586 dossiers de prêt et la découverte de 3 clusters de risque distincts avec 73% de précision de détection de défaut</p>
+            
+            <h3>🎯 Implémentation Immédiate (0-3 mois)</h3>
+            <div class="recommendations-grid">
+                <div class="business-card">
+                    <h4>1. Stratégie de Prix Basée sur le Risque</h4>
+                    <p><strong>Action:</strong> Implémenter une tarification différentielle basée sur l'assignation de cluster et les caractéristiques de risque</p>
+                    <p><strong>Implémentation:</strong></p>
+                    <ul style="font-size: 0.9rem; margin-top: 10px;">
+                        <li>Clusters Haut-Risque: <strong>Prime de taux +2-4%</strong></li>
+                        <li>Consolidation de Dettes: <strong>Prime +1,5-2%</strong> (42,8% de corrélation de défaut plus élevée)</li>
+                        <li>Locataires: <strong>Prime +0,5-1%</strong> (35% de risque de défaut plus élevé)</li>
+                    </ul>
+                    <p><strong>Impact Attendu:</strong> <span style="color: #181974; font-weight: bold;">15-25% réduction des pertes de défaut</span></p>
+                </div>
+
+                <div class="business-card">
+                    <h4>2. Système de Scoring de Risque Automatisé</h4>
+                    <p><strong>Action:</strong> Déployer le modèle ML d'ensemble pour le traitement d'application en temps réel</p>
+                    <p><strong>Implémentation:</strong></p>
+                    <ul style="font-size: 0.9rem; margin-top: 10px;">
+                        <li><strong>Voie rapide:</strong> Scores <0,3 (43,7% du portefeuille - Cluster bas-risque)</li>
+                        <li><strong>Révision manuelle:</strong> Scores >0,5 (22,9% du portefeuille - Clusters haut-risque)</li>
+                        <li><strong>Processus standard:</strong> Scores 0,3-0,5</li>
+                    </ul>
+                    <p><strong>Impact Attendu:</strong> <span style="color: #181974; font-weight: bold;">40% réduction du temps de souscription</span></p>
+                </div>
+
+                <div class="business-card">
+                    <h4>3. Protocoles de Due Diligence Renforcés</h4>
+                    <p><strong>Action:</strong> Déclencher une vérification additionnelle basée sur les schémas de risque</p>
+                    <p><strong>Implémentation:</strong></p>
+                    <ul style="font-size: 0.9rem; margin-top: 10px;">
+                        <li><strong>DTI >25%:</strong> Vérification additionnelle des revenus/dépenses</li>
+                        <li><strong>Emploi <2 ans:</strong> Vérification d'emploi requise</li>
+                        <li><strong>Grade D/E:</strong> Conseil financier obligatoire</li>
+                    </ul>
+                    <p><strong>Impact Attendu:</strong> <span style="color: #181974; font-weight: bold;">20-30% réduction des défauts manqués</span></p>
+                </div>
+            </div>
+
+            <h3>🔄 Optimisation Long-terme (6-12 mois)</h3>
+            <div class="recommendations-grid">
+                <div class="business-card">
+                    <h4>4. Stratégie de Développement Produit</h4>
+                    <p><strong>Programme Avantage-Propriétaire:</strong> Remise de taux 0,5-1% pour détenteurs d'hypothèque</p>
+                    <p><strong>Spécialisation Prêt Éducation:</strong> Taux compétitifs pour prêts éducation (risque de défaut le plus bas)</p>
+                    <p><strong>Restructuration Consolidation de Dettes:</strong> Plans de paiement structurés avec incitations d'étape</p>
+                    <p><strong>Impact Attendu:</strong> <span style="color: #181974; font-weight: bold;">10-15% augmentation des demandes de haute qualité</span></p>
+                </div>
+
+                <div class="business-card">
+                    <h4>5. Rétention Client & Récupération</h4>
+                    <p><strong>Système d'Alerte Précoce:</strong> Alertes automatisées pour signaux de stress d'emprunteur</p>
+                    <p><strong>Programme de Bien-être Financier:</strong> Outils de budgétisation et éducation pour emprunteurs à risque</p>
+                    <p><strong>Programmes de Résolution:</strong> Modifications de paiement avant défaut</p>
+                    <p><strong>Impact Attendu:</strong> <span style="color: #181974; font-weight: bold;">25-35% amélioration des taux de récupération</span></p>
+                </div>
+
+                <div class="business-card">
+                    <h4>7. Implémentation Analytics Avancés</h4>
+                    <p><strong>Scoring Comportemental:</strong> Schémas de dépense et données de comportement financier</p>
+                    <p><strong>Données Alternatives:</strong> Paiements utilitaires, historique de loyer, vérification d'emploi</p>
+                    <p><strong>Mises à Jour Temps Réel:</strong> Modèles d'apprentissage continu</p>
+                    <p><strong>Impact Attendu:</strong> <span style="color: #181974; font-weight: bold;">5-10% amélioration de la précision de prédiction</span></p>
+                </div>
+            </div>
+
+            <h3>📊 Stratégie de Segmentation Client</h3>
+            <div class="highlight-box">
+                <h3>Cadre de Décision Basé sur les Clusters de Risque</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="background: rgba(231, 76, 60, 0.8); padding: 15px; border-radius: 8px;">
+                        <strong>Cluster Haut-Risque (14,7% des clients)</strong><br>
+                        <strong>Taux de Défaut: 47,3%</strong><br>
+                        <small>→ Examen renforcé + primes de tarification</small>
+                    </div>
+                    <div style="background: rgba(243, 156, 18, 0.8); padding: 15px; border-radius: 8px;">
+                        <strong>Cluster Risque-Modéré (12,9% des clients)</strong><br>
+                        <strong>Taux de Défaut: 22,9%</strong><br>
+                        <small>→ Surveillance standard + tarification modérée</small>
+                    </div>
+                    <div style="background: rgba(46, 204, 113, 0.8); padding: 15px; border-radius: 8px;">
+                        <strong>Cluster Bas-Risque (43,7% des clients)</strong><br>
+                        <strong>Taux de Défaut: 14,7%</strong><br>
+                        <small>→ Traitement rapide + taux compétitifs</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estimated Business Impact -->
+        <div class="card">
+            <h2><i class="fas fa-chart-pie icon" style="color: #d35400;padding-right: 10px"></i>Impact Business Estimé</h2>
+            <p>L'implémentation des recommandations pilotées par l'apprentissage automatique pourrait générer des bénéfices financiers et opérationnels significatifs :</p>
+            <ul>
+                <li><strong>Réduction de Risque:</strong> La stratégie de tarification basée sur le risque pourrait réduire les pertes de défaut de <strong>15-25%</strong> annuellement en tarifiant correctement les prêts à haut risque avec des primes appropriées.</li>
+                <li><strong>Efficacité Opérationnelle:</strong> Le système de scoring de risque automatisé pourrait réduire le temps de souscription de <strong>40%</strong> en accélérant les demandes à bas risque et concentrant la révision manuelle sur les cas à haut risque.</li>
+                <li><strong>Qualité du Portefeuille:</strong> Les protocoles de due diligence renforcés pourraient réduire les défauts manqués de <strong>20-30%</strong> à travers des déclencheurs de vérification additionnelle pour profils à haut risque.</li>
+                <li><strong>Rétention Client:</strong> Les systèmes d'alerte précoce et programmes de bien-être financier pourraient améliorer les taux de récupération de <strong>25-35%</strong> en intervenant avant que les défauts n'arrivent.</li>
+                <li><strong>Avantage Compétitif:</strong> L'implémentation d'analytics avancés pourrait améliorer la précision de prédiction de <strong>5-10%</strong> à travers des modèles d'apprentissage continu et l'intégration de données alternatives.</li>
+            </ul>
+        </div>
+
+        <!-- Analysis Challenges -->
+        <div class="card">
+            <h2><i class="fas fa-puzzle-piece icon" style="color: #c0392b;padding-right: 10px"></i>Défis Techniques Surmontés</h2>
+            <ul class="challenges-list">
+                <li>
+                    <div class="challenge-title">Déséquilibre de Classe - Le Problème de Rappel Faible</div>
+                    <strong>Défi:</strong> Seulement un petit pourcentage d'emprunteurs fait défaut, créant un déséquilibre de classe sévère qui rend les modèles ML conservateurs.<br><br>
+                    <strong>Pourquoi Cela Cause un Rappel Faible:</strong><br>
+                    • Les modèles prédisent "pas de défaut" pour la plupart des cas pour atteindre une haute précision<br>
+                    • Les exemples de défaut limités rendent difficile l'apprentissage des signes d'alerte nuancés<br>
+                    • Résulte en manquer beaucoup de vrais défaillants (rappel faible)<br><br>
+                    <strong>Solution:</strong> J'ai utilisé le scoring F-beta (β=1,5), SMOTE (Technique de Sur-échantillonnage de Minorité Synthétique) pour générer des exemples de défaut synthétiques, apprentissage sensible au coût avec poids de classe stratégiques, et méthodes d'ensemble pour atteindre 73% de rappel tout en maintenant 92,85% de précision.
+                </li>
+                <li>
+                    <div class="challenge-title">Caractéristiques Confuses Qui Trompent l'Apprentissage Automatique</div>
+                    <strong>Défi:</strong> Plusieurs caractéristiques confusaient en fait les modèles ML plutôt que d'aider à identifier les schémas de défaut.<br><br>
+                    <strong>Exemples de Caractéristiques Confuses:</strong><br>
+                    • Emprunteurs à haut revenu faisant défaut à des taux inattendus<br>
+                    • Durée d'emploi contenant des signaux trompeurs (sauteurs d'emploi vs. changeurs de carrière)<br>
+                    • Interactions âge-revenu brisant les hypothèses simples<br>
+                    • Ambiguïté de l'objectif du prêt (consolidation de dettes: responsable vs. désespéré)<br><br>
+                    <strong>Solution:</strong> J'ai utilisé l'analyse SHAP pour identifier les caractéristiques confuses et ingénieré des caractéristiques composites qui capturaient mieux les vrais schémas comportementaux.
+                </li>
+                <li>
+                    <div class="challenge-title">Sélection de Stratégie d'Imputation de Valeur Manquante</div>
+                    <strong>Défi:</strong> 895 valeurs manquantes dans employment_length (2,7% des données) nécessitaient une manipulation soigneuse pour éviter d'introduire du biais.<br><br>
+                    <strong>Approche Statistique:</strong><br>
+                    • J'ai comparé 4 méthodes d'imputation: moyenne, médiane, mode, et IterativeImputer<br>
+                    • J'ai utilisé la validation croisée pour mesurer l'impact sur la performance du modèle<br>
+                    • IterativeImputer a montré la meilleure préservation des relations de données<br>
+                    • J'ai validé que les valeurs imputées maintenaient des distributions réalistes de durée d'emploi<br><br>
+                    <strong>Solution:</strong> J'ai sélectionné IterativeImputer basé sur les métriques de performance statistique, assurant que les valeurs imputées ne créaient pas de schémas artificiels dans les données.
+                </li>
+                <li>
+                    <div class="challenge-title">Détection de Valeurs Aberrantes et Qualité des Données</div>
+                    <strong>Défi:</strong> Les valeurs extrêmes pourraient biaiser l'apprentissage du modèle ML et créer des schémas trompeurs.<br><br>
+                    <strong>Approche Logique:</strong><br>
+                    • J'ai appliqué des connaissances du domaine pour identifier des valeurs irréalistes (revenu >500K$, conditions de prêt impossibles)<br>
+                    • J'ai utilisé des seuils statistiques combinés avec la logique business<br>
+                    • Je me suis concentré sur des valeurs qui violaient les principes fondamentaux de prêt<br>
+                    • J'ai préservé les cas légitimes de haute valeur tout en supprimant les erreurs de saisie de données<br><br>
+                    <strong>Solution:</strong> J'ai supprimé les valeurs aberrantes extrêmes utilisant des contraintes logiques plutôt que des méthodes purement statistiques, assurant que les données nettoyées reflétaient des profils d'emprunteur réalistes.
+                </li>
+            </ul>
+        </div>
+
+        <!-- Key Learnings & Insights -->
+        <div class="card">
+            <h2><i class="fas fa-graduation-cap icon" style="color: #8e44ad;padding-right: 10px"></i>Apprentissages Clés & Insights</h2>
+            
+            <h3>Compétences Techniques Développées</h3>
+            <ul>
+                <li><strong>Qualité des données:</strong> le jeu de données que j'ai utilisé est bon pour prédire les payeurs de prêts mais il manque de caractéristiques (temporelles, comportementales, etc...) qui peuvent montrer plus de schémas pour les défaillants qui ont des caractéristiques similaires aux payeurs de prêts.</li>
+                <li><strong>Ingénierie ML Avancée:</strong> J'ai maîtrisé les techniques de prévention du surapprentissage à travers le scoring F-beta, le sur-échantillonnage SMOTE, et les méthodes d'ensemble</li>
+                <li><strong>Prétraitement Statistique des Données:</strong> J'ai appris à comparer systématiquement les méthodes d'imputation (moyenne, médiane, mode, IterativeImputer) utilisant la validation croisée pour la gestion optimale des valeurs manquantes et les statistiques.</li>
+                <li><strong>Interprétabilité du Modèle:</strong> J'ai développé la compétence dans l'analyse SHAP pour traduire les décisions de modèles complexes en insights business compréhensibles</li>
+                <li><strong>Optimisation d'Hyperparamètres:</strong> J'ai acquis l'expertise en Optuna avec l'Estimateur de Parzen Structuré par Arbre pour l'exploration intelligente de l'espace de recherche</li>
+            </ul>
+
+            <h3>Connaissance du Domaine Business</h3>
+            <ul>
+                <li><strong>Gestion des Risques Financiers:</strong> Compréhension profonde de comment le grade de prêt, ratios dette-revenu, et stabilité d'emploi pilotent le risque de défaut</li>
+                <li><strong>Insights de Comportement Client:</strong> J'ai appris que les défauts suivent des schémas prévisibles pilotés par les circonstances de vie, pas les défauts de caractère</li>
+                <li><strong>Segmentation des Risques:</strong> J'ai découvert que 23% des clients pilotent la majorité du risque de défaut, permettant des interventions ciblées</li>
+            </ul>
+
+            <h3>Méthodologie de Science des Données</h3>
+            <ul>
+                <li><strong>Conception de Pipeline Bout-en-Bout:</strong> J'ai construit un pipeline ML prêt pour la production avec validation appropriée, prévention du surapprentissage, et capacités de surveillance</li>
+                <li><strong>Maîtrise du Déséquilibre de Classe:</strong> J'ai géré avec succès un déséquilibre de classe sévère (18,8% taux de défaut) atteignant 73% de rappel avec 92,85% de précision</li>
+                <li><strong>Clustering Client:</strong> J'ai appliqué l'apprentissage non supervisé pour découvrir 3 profils de risque distincts avec applications business claires</li>
+                <li><strong>Sélection de Métrique de Performance:</strong> J'ai appris à choisir le scoring F-beta (β=1,5) basé sur les objectifs business plutôt que les métriques de précision par défaut</li>
+                <li><strong>Rigueur de Validation:</strong> J'ai implémenté multiples approches de validation pour assurer que les schémas représentent un véritable comportement, pas du bruit statistique</li>
+            </ul>
+        </div>
+
+        <!-- Key Insights -->
+        <div class="card">
+            <h2><i class="fas fa-brain icon" style="color: #f39c12;padding-right: 10px"></i>Insights Clés sur le Comportement Financier Humain</h2>
+            
+            <h3>Ce que Nous Avons Appris sur les Gens et l'Argent</h3>
+            <ul>
+                <li><strong>Les Défauts Sont Prévisibles:</strong> Le stress financier suit des schémas clairs - ce n'est pas aléatoire ou une question de caractère</li>
+                <li><strong>Les Changements de Vie Sont Dangereux:</strong> Changements d'emploi, déménagement, événements de vie majeurs augmentent dramatiquement le risque de défaut</li>
+                <li><strong>L'Expérience Surpasse le Revenu:</strong> La gestion de crédit est une compétence apprise qui prend du temps à développer</li>
+                <li><strong>Multiples Problèmes Se Composent:</strong> Les facteurs de risque se multiplient plutôt que de simplement s'additionner</li>
+                <li><strong>Les Signaux d'Alerte Précoce Existent:</strong> Les problèmes financiers arrivent rarement soudainement - il y a des schémas détectables</li>
+            </ul>
+
+            <h3>À Propos de l'Apprentissage Automatique pour Comprendre les Gens</h3>
+            <ul>
+                <li><strong>Pouvoir de Reconnaissance de Schémas:</strong> ML a détecté des schémas comportementaux subtils invisibles à l'analyse traditionnelle</li>
+                <li><strong>Découverte d'Interaction:</strong> A trouvé des relations complexes entre âge, revenu, emploi, et logement</li>
+                <li><strong>Succès de Segmentation:</strong> A identifié 3 types de comportement d'emprunteur distincts avec différents profils de risque</li>
+                <li><strong>Interprétabilité Cruciale:</strong> Les insights les plus précieux sont venus de la compréhension du POURQUOI les modèles faisaient des prédictions</li>
+            </ul>
+        </div>
+
+        <!-- Future Opportunities -->
+        <div class="card">
+            <h2><i class="fas fa-compass icon" style="color: #16a085;padding-right: 10px"></i>Opportunités de Recherche Future</h2>
+            <ul>
+                <li><strong>Déclencheurs Comportementaux:</strong> Quels événements de vie spécifiques poussent les gens de la lutte au défaut ?</li>
+                <li><strong>Schémas de Récupération:</strong> Pouvons-nous identifier les emprunteurs qui pourraient récupérer avant de faire défaut ?</li>
+                <li><strong>Données Alternatives:</strong> Comment les schémas de dépense et connexions sociales prédisent-ils le risque de défaut ?</li>
+                <li><strong>Timing d'Intervention:</strong> Quel est le point optimal pour les programmes d'intervention précoce ?</li>
+                <li><strong>Contexte Économique:</strong> Comment les cycles de récession/inflation changent-ils les schémas de défaut individuels ?</li>
+                <li><strong>Facteurs Culturels:</strong> Les différentes communautés gèrent-elles le stress financier différemment ?</li>
+            </ul>
+        </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-caption" id="caption"></div>
+    </div>
+
+    <script>
+        function openImageModal(img) {
+            var modal = document.getElementById("imageModal");
+            var modalImg = document.getElementById("modalImage");
+            var captionText = document.getElementById("caption");
+            
+            modal.style.display = "block";
+            modalImg.src = img.src;
+            captionText.innerHTML = img.alt;
+        }
+
+        // Close modal when clicking the X
+        document.getElementsByClassName("close")[0].onclick = function() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            var modal = document.getElementById("imageModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.getElementById("imageModal").style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>

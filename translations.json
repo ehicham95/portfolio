@@ -25,13 +25,14 @@
         "businessRecommendations": "Business Recommendations",
         "estimatedBusinessImpact": "Estimated Business Impact",
         "contactTitle": "Get in Touch",
+        "downloadResume": "Download Resume",
+        "resumeDescription": "For a detailed overview of my experience and qualifications, you can download my resume below.",
         "skillsTitle": "My Skills",
         "skills": {
             "programmingLanguages": {
                 "title": "Programming Languages",
                 "items": [
                     {"name": "Python"},
-                    {"name": "R"},
                     {"name": "SQL"}
                 ]
             },
@@ -46,18 +47,27 @@
             "dataVisualization": {
                 "title": "Data Visualization",
                 "items": [
+                    {"name": "Power BI"},
                     {"name": "Matplotlib"},
                     {"name": "Seaborn"},
-                    {"name": "Tableau"},
-                    {"name": "Power BI"}
+                    {"name": "Plotly"}
+                ]
+            },
+            "statisticalTechniques": {
+                "title": "Statistical Techniques",
+                "items": [
+                    {"name": "Hypothesis Testing & Validation"},
+                    {"name": "Distribution Analysis"},
+                    {"name": "Feature Analysis"}
                 ]
             },
             "machineLearning": {
                 "title": "Machine Learning",
                 "items": [
-                    {"name": "Scikit-learn"},
-                    {"name": "K-means Clustering"},
-                    {"name": "Regression"}
+                    {"name": "Clustering"},
+                    {"name": "Classification"},
+                    {"name": "Regression"},
+                    {"name": "Ensemble"}
                 ]
             },
             "toolsAndPlatforms": {
@@ -65,8 +75,7 @@
                 "items": [
                     {"name": "Jupyter"},
                     {"name": "Git"},
-                    {"name": "GitHub"},
-                    {"name": "Google Analytics"}
+                    {"name": "Microsoft Fabric"}
                 ]
             }
         }
@@ -97,13 +106,14 @@
         "businessRecommendations": "Recommandations Commerciales",
         "estimatedBusinessImpact": "Impact Commercial Estimé",
         "contactTitle": "Contactez-moi",
+        "downloadResume": "Télécharger CV",
+        "resumeDescription": "Pour un aperçu détaillé de mon expérience et de mes qualifications, vous pouvez télécharger mon CV ci-dessous.",
         "skillsTitle": "Mes Compétences",
         "skills": {
             "programmingLanguages": {
                 "title": "Langages de Programmation",
                 "items": [
                     {"name": "Python"},
-                    {"name": "R"},
                     {"name": "SQL"}
                 ]
             },
@@ -118,27 +128,35 @@
             "dataVisualization": {
                 "title": "Visualisation de Données",
                 "items": [
+                    {"name": "Power BI"},
                     {"name": "Matplotlib"},
                     {"name": "Seaborn"},
-                    {"name": "Tableau"},
-                    {"name": "Power BI"}
+                    {"name": "Plotly"}
+                ]
+            },
+            "statisticalTechniques": {
+                "title": "Techniques Statistiques",
+                "items": [
+                    {"name": "Tests et Validation d'Hypothèses"},
+                    {"name": "Analyse des Distributions"},
+                    {"name": "Analyse des Variables"}
                 ]
             },
             "machineLearning": {
-                "title": "Apprentissage Automatique",
+                "title": "Machine Learning",
                 "items": [
-                    {"name": "Scikit-learn"},
-                    {"name": "K-means Clustering"},
-                    {"name": "Régression"}
+                    {"name": "Clustering"},
+                    {"name": "Classification"},
+                    {"name": "Regression"},
+                    {"name": "Ensemble"}
                 ]
             },
             "toolsAndPlatforms": {
-                "title": "Outils et Plateformes",
+                "title": "Outils & Plateformes",
                 "items": [
                     {"name": "Jupyter"},
                     {"name": "Git"},
-                    {"name": "GitHub"},
-                    {"name": "Google Analytics"}
+                    {"name": "Microsoft Fabric"}
                 ]
             }
         }
