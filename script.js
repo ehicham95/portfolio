@@ -7,6 +7,34 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('projectModal');
     const closeButton = document.querySelector('.close');
 
+    // Mobile menu functionality
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    if (mobileMenuToggle && mobileNav) {
+        mobileMenuToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a nav link
+        const mobileNavLinks = mobileNav.querySelectorAll('a');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!mobileMenuToggle.contains(event.target) && !mobileNav.contains(event.target)) {
+                mobileMenuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+            }
+        });
+    }
+
     // Fetch all necessary data
     Promise.all([
         fetch('translations.json').then(response => response.json()),
@@ -232,27 +260,49 @@ document.addEventListener('DOMContentLoaded', function() {
         currentLang = currentLang === 'en' ? 'fr' : 'en';
         const newFlag = currentLang === 'en' ? 'https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png' : 'https://cdn.countryflags.com/thumbs/france/flag-400.png';
         const newAltFlag = currentLang === 'en' ? 'https://cdn.countryflags.com/thumbs/france/flag-400.png' : 'https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png';
-        document.getElementById('selectedFlag').src = newFlag;
-        document.querySelector('.alternative-flag').src = newAltFlag;
+        
+        // Update both desktop and mobile flag switchers
+        const selectedFlag = document.getElementById('selectedFlag');
+        const selectedFlagDesktop = document.getElementById('selectedFlagDesktop');
+        if (selectedFlag) selectedFlag.src = newFlag;
+        if (selectedFlagDesktop) selectedFlagDesktop.src = newFlag;
+        
+        const altFlags = document.querySelectorAll('.alternative-flag');
+        altFlags.forEach(flag => flag.src = newAltFlag);
+        
         projectsData = await fetchProjects();
         updateTextContent();
     };
 
-    document.querySelectorAll('nav a').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            if(targetSection){
-                window.scrollTo({
-                    top: targetSection.offsetTop - 80,
-                    behavior: 'smooth'
+    // Navigation functionality for both desktop and mobile
+    function setupNavigation() {
+        const allNavLinks = document.querySelectorAll('nav a, .mobile-nav a');
+        
+        allNavLinks.forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if(targetSection){
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+                
+                // Remove active class from all nav links
+                document.querySelectorAll('nav a, .mobile-nav a').forEach(link => link.classList.remove('active'));
+                
+                // Add active class to both desktop and mobile versions
+                const linkText = this.getAttribute('href');
+                document.querySelectorAll(`nav a[href="${linkText}"], .mobile-nav a[href="${linkText}"]`).forEach(link => {
+                    link.classList.add('active');
                 });
-            }
-            document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
-            this.classList.add('active');
+            });
         });
-    });
+    }
+    
+    setupNavigation();
 
     function highlightActiveNavLink() {
         let current = '';
@@ -264,7 +314,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        document.querySelectorAll('nav a').forEach(a => {
+        // Update both desktop and mobile navigation
+        document.querySelectorAll('nav a, .mobile-nav a').forEach(a => {
             a.classList.remove('active');
             if (a.getAttribute('href').substring(1) === current) {
                 a.classList.add('active');

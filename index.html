@@ -18,11 +18,32 @@
                 <li><a href="#contact" data-translate-key="contactNavLink">Contact</a></li>
             </ul>
         </nav>
-            <div class="language-switcher">
+            <div class="mobile-header-controls">
+                <button class="hamburger-menu" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="language-switcher">
+                    <div class="flag-container">
+                        <img src="https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png" alt="English" class="flag-icon" id="selectedFlag" >
+                        <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" alt="Français" class="flag-icon alternative-flag" onclick="switchLanguage()">
+                    </div>
+                </div>
+            </div>
+            <div class="language-switcher desktop-language-switcher">
                 <div class="flag-container">
-                    <img src="https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png" alt="English" class="flag-icon" id="selectedFlag" >
+                    <img src="https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png" alt="English" class="flag-icon" id="selectedFlagDesktop" >
                     <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" alt="Français" class="flag-icon alternative-flag" onclick="switchLanguage()">
                 </div>
+            </div>
+            <div class="mobile-nav" id="mobileNav">
+                <ul>
+                    <li><a href="#about" class="active" data-translate-key="aboutNavLink">About me</a></li>
+                    <li><a href="#skills" data-translate-key="skillsNavLink">Skills</a></li>
+                    <li><a href="#projects" data-translate-key="projectsNavLink">Portfolio</a></li>
+                    <li><a href="#contact" data-translate-key="contactNavLink">Contact</a></li>
+                </ul>
             </div>
         </div>
     </header>
